@@ -70,6 +70,9 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
 const $=id=>document.getElementById(id), canvas=$("canvas"),stage=$("stage"),hud=$("hud"); let ctx=canvas.getContext("2d");
 const S={tool:"pen",playing:false,drawPending:false,activePointers:new Set(),touchPoints:new Map(),zoomGesture:null,pencilActive:false,current:null,layers:[{id:1,name:"Layer 1",strokes:[],opacity:1,blend:"source-over",group:null,visible:true}],active:1,nextId:2,selected:new Set([1]),undo:[],redo:[],colors:[],viewScale:1,viewX:0,viewY:0,moveStart:null,docWidth:1600,docHeight:1200,created:false};
 const mediaCache=new Map();
+const layerRasterCache=new Map();
+function invalidateLayerCache(layerId){if(layerId===undefined)layerRasterCache.clear();else layerRasterCache.delete(layerId)}
+function canCacheLayer(layer){return layer.strokes.every(st=>(st.kind==="image"||st.kind==="video")?st.kind==="image":(!st.s||st.s.anim==="static"||st.s.intensity===0))}
 const getLayer=()=>S.layers.find(l=>l.id===S.active)||S.layers[0];
 const settings=()=>({color:$("color").value,size:+$("size").value,opacity:+$("opacity").value/100,pressure:+$("pressure").value/100,smoothing:+$("smooth").value/100,brush:$("brush").value,anim:$("animStyle").value,intensity:+$("intensity").value,speed:+$("speed").value,freq:+$("freq").value,loop:+$("loop").value,seamless:$("seamless").checked});
 function resize(){
@@ -88,7 +91,7 @@ function createCanvas(w,h){
 }
 function snap(){return JSON.stringify({layers:S.layers,active:S.active,nextId:S.nextId,docWidth:S.docWidth,docHeight:S.docHeight})}
 function checkpoint(){S.undo.push(snap());if(S.undo.length>70)S.undo.shift();S.redo=[]}
-function restore(raw){let d=JSON.parse(raw);S.layers=d.layers;S.active=d.active;S.nextId=d.nextId;if(d.docWidth)S.docWidth=d.docWidth;if(d.docHeight)S.docHeight=d.docHeight;S.selected=new Set([S.active]);drawLayers();render();autosave()}
+function restore(raw){invalidateLayerCache();let d=JSON.parse(raw);S.layers=d.layers;S.active=d.active;S.nextId=d.nextId;if(d.docWidth)S.docWidth=d.docWidth;if(d.docHeight)S.docHeight=d.docHeight;S.selected=new Set([S.active]);drawLayers();render();autosave()}
 function undo(){if(!S.undo.length)return;S.redo.push(snap());restore(S.undo.pop())}
 function redo(){if(!S.redo.length)return;S.undo.push(snap());restore(S.redo.pop())}
 function autosave(){try{localStorage.setItem("wobbleStudioAuto",snap())}catch(e){}}
@@ -215,7 +218,28 @@ function render(t=performance.now()/1000){
  ctx.setTransform(d,0,0,d,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation="source-over";
  ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,S.docWidth,S.docHeight);
  if($("grid").checked){ctx.save();ctx.strokeStyle="#9aa0aa44";ctx.lineWidth=1;for(let x=0;x<S.docWidth;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,S.docHeight);ctx.stroke()}for(let y=0;y<S.docHeight;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(S.docWidth,y);ctx.stroke()}ctx.restore()}
- for(const l of S.layers){if(!l.visible)continue;ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";for(const st of l.strokes)drawStrokeSet(st,t);ctx.restore()}
+ for(const l of S.layers){
+   if(!l.visible)continue;
+   ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";
+   if(canCacheLayer(l)){
+     let cached=layerRasterCache.get(l.id);
+     const valid=cached&&cached.width===canvas.width&&cached.height===canvas.height&&cached.docWidth===S.docWidth&&cached.docHeight===S.docHeight&&cached.count===l.strokes.length;
+     if(!valid){
+       const raster=document.createElement("canvas");raster.width=canvas.width;raster.height=canvas.height;
+       const rc=raster.getContext("2d");
+       rc.setTransform(d,0,0,d,0,0);rc.globalAlpha=1;rc.globalCompositeOperation="source-over";
+       const previous=ctx;ctx=rc;
+       for(const st of l.strokes)drawStrokeSet(st,0);
+       ctx=previous;
+       cached={canvas:raster,width:raster.width,height:raster.height,docWidth:S.docWidth,docHeight:S.docHeight,count:l.strokes.length};layerRasterCache.set(l.id,cached);
+     }
+     ctx.drawImage(cached.canvas,0,0,S.docWidth,S.docHeight);
+   }else{
+     layerRasterCache.delete(l.id);
+     for(const st of l.strokes)drawStrokeSet(st,t);
+   }
+   ctx.restore();
+ }
  if(S.current)drawStrokeSet(S.current,t);
  drawMediaSelection(activeMediaStroke());
  if(S.playing)requestAnimationFrame(x=>render(x/1000));
@@ -315,7 +339,7 @@ function moveStroke(e){
    if(g.handle==="n")m.cropT=Math.max(0,Math.min(.89-g.cropB,g.cropT+dy/dh));
    if(g.handle==="s")m.cropB=Math.max(0,Math.min(.89-g.cropT,g.cropB-dy/dh));
  }
- updateMediaPanel();if(!S.drawPending){S.drawPending=true;requestAnimationFrame(()=>{S.drawPending=false;render()})}return;}
+ invalidateLayerCache(getLayer()?.id);updateMediaPanel();if(!S.drawPending){S.drawPending=true;requestAnimationFrame(()=>{S.drawPending=false;render()})}return;}
   if(!S.activePointers.has(pid)||!S.current)return;
   if(e.cancelable)e.preventDefault();
   const events=(typeof e.getCoalescedEvents==="function" ? e.getCoalescedEvents() : null);
@@ -339,6 +363,7 @@ function finishCurrentStroke(){
   if(!layer){S.current=null;render();return false;}
   // Add to model before clearing preview: release never removes the visible stroke.
   layer.strokes.push(completed);
+  invalidateLayerCache(layer.id);
   S.current=null;
   drawLayers();
   autosave();
@@ -398,9 +423,9 @@ function updateMediaPanel(){const st=activeMediaStroke(),panel=$("mediaPlacement
 function mediaInputChanged(id){const st=activeMediaStroke();if(!st)return;checkpoint();const v=+$(id).value;
  if(id==="mediaX")st.x=v;else if(id==="mediaY")st.y=v;else if(id==="mediaW")st.w=Math.max(1,(st.baseW||st.w)*v/100);else if(id==="mediaH")st.h=Math.max(1,(st.baseH||st.h)*v/100);else if(id==="mediaR")st.rotation=v;else st[id]=v/100;
  updateMediaPanel();render();autosave();}
-for(const id of ["mediaX","mediaY","mediaW","mediaH","mediaR","cropL","cropT","cropR","cropB"]){$(id).addEventListener("pointerdown",()=>checkpoint());$(id).addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key))checkpoint()});$(id).addEventListener("input",()=>{const st=activeMediaStroke();if(!st)return;const v=+$(id).value;if(id==="mediaX")st.x=v;else if(id==="mediaY")st.y=v;else if(id==="mediaW")st.w=Math.max(1,(st.baseW||st.w)*v/100);else if(id==="mediaH")st.h=Math.max(1,(st.baseH||st.h)*v/100);else if(id==="mediaR")st.rotation=v;else st[id]=v/100;$(id+"V").textContent=id==="mediaR"?v+"°":id.startsWith("crop")?v+"%":id==="mediaW"||id==="mediaH"?v+"%":v;render()})}
-$("mediaFitBtn").onclick=()=>{const st=activeMediaStroke();if(!st)return;checkpoint();const nw=st.naturalW||S.docWidth,nh=st.naturalH||S.docHeight,ratio=Math.min(S.docWidth/nw,S.docHeight/nh);st.w=nw*ratio;st.h=nh*ratio;st.baseW=st.w;st.baseH=st.h;st.x=(S.docWidth-st.w)/2;st.y=(S.docHeight-st.h)/2;st.rotation=0;updateMediaPanel();render();autosave()};
-$("mediaResetCropBtn").onclick=()=>{const st=activeMediaStroke();if(!st)return;checkpoint();st.cropL=st.cropT=st.cropR=st.cropB=0;updateMediaPanel();render();autosave()};
+for(const id of ["mediaX","mediaY","mediaW","mediaH","mediaR","cropL","cropT","cropR","cropB"]){$(id).addEventListener("pointerdown",()=>checkpoint());$(id).addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key))checkpoint()});$(id).addEventListener("input",()=>{const st=activeMediaStroke();if(!st)return;const v=+$(id).value;if(id==="mediaX")st.x=v;else if(id==="mediaY")st.y=v;else if(id==="mediaW")st.w=Math.max(1,(st.baseW||st.w)*v/100);else if(id==="mediaH")st.h=Math.max(1,(st.baseH||st.h)*v/100);else if(id==="mediaR")st.rotation=v;else st[id]=v/100;$(id+"V").textContent=id==="mediaR"?v+"°":id.startsWith("crop")?v+"%":id==="mediaW"||id==="mediaH"?v+"%":v;invalidateLayerCache(getLayer()?.id);render()})}
+$("mediaFitBtn").onclick=()=>{const st=activeMediaStroke();if(!st)return;checkpoint();const nw=st.naturalW||S.docWidth,nh=st.naturalH||S.docHeight,ratio=Math.min(S.docWidth/nw,S.docHeight/nh);st.w=nw*ratio;st.h=nh*ratio;st.baseW=st.w;st.baseH=st.h;st.x=(S.docWidth-st.w)/2;st.y=(S.docHeight-st.h)/2;st.rotation=0;invalidateLayerCache(getLayer()?.id);updateMediaPanel();render();autosave()};
+$("mediaResetCropBtn").onclick=()=>{const st=activeMediaStroke();if(!st)return;checkpoint();st.cropL=st.cropT=st.cropR=st.cropB=0;invalidateLayerCache(getLayer()?.id);updateMediaPanel();render();autosave()};
 function drawLayers(){
  updateMediaPanel();
  let root=$("layers");root.replaceChildren();
@@ -420,7 +445,7 @@ function drawLayers(){
  });
 }
 $("addLayer").onclick=()=>{checkpoint();let l={id:S.nextId++,name:"Layer "+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(l);S.active=l.id;S.selected=new Set([l.id]);drawLayers();render();autosave()};
-$("deleteLayerBtn").onclick=()=>{if(S.layers.length<=1){alert("Keep at least one layer in the document.");return}checkpoint();const id=S.active;S.layers=S.layers.filter(l=>l.id!==id);S.active=S.layers[S.layers.length-1].id;S.selected.delete(id);if(!S.selected.size)S.selected.add(S.active);const l=getLayer();$("layerOpacity").value=Math.round(l.opacity*100);$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers();render();autosave()};
+$("deleteLayerBtn").onclick=()=>{if(S.layers.length<=1){alert("Keep at least one layer in the document.");return}checkpoint();const id=S.active;invalidateLayerCache(id);S.layers=S.layers.filter(l=>l.id!==id);S.active=S.layers[S.layers.length-1].id;S.selected.delete(id);if(!S.selected.size)S.selected.add(S.active);const l=getLayer();$("layerOpacity").value=Math.round(l.opacity*100);$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers();render();autosave()};
 $("layerOpacity").oninput=e=>{const layer=getLayer();layer.opacity=+e.target.value/100;$("layerOpacityV").textContent=e.target.value+"%";render();autosave()};
 $("layerOpacity").addEventListener("pointerdown",()=>checkpoint());$("layerOpacity").addEventListener("keydown",e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight")checkpoint()});
 $("blend").onchange=e=>{checkpoint();getLayer().blend=e.target.value;render();autosave()};
@@ -454,7 +479,28 @@ function renderExport(t){
  const out=document.createElement("canvas");out.width=S.docWidth;out.height=S.docHeight;
  const c=out.getContext("2d"),old=ctx;ctx=c;ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation="source-over";
  ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,S.docWidth,S.docHeight);
- for(const l of S.layers){if(!l.visible)continue;ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";for(const st of l.strokes)drawStrokeSet(st,t);ctx.restore()}
+ for(const l of S.layers){
+   if(!l.visible)continue;
+   ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";
+   if(canCacheLayer(l)){
+     let cached=layerRasterCache.get(l.id);
+     const valid=cached&&cached.width===canvas.width&&cached.height===canvas.height&&cached.docWidth===S.docWidth&&cached.docHeight===S.docHeight&&cached.count===l.strokes.length;
+     if(!valid){
+       const raster=document.createElement("canvas");raster.width=canvas.width;raster.height=canvas.height;
+       const rc=raster.getContext("2d");
+       rc.setTransform(d,0,0,d,0,0);rc.globalAlpha=1;rc.globalCompositeOperation="source-over";
+       const previous=ctx;ctx=rc;
+       for(const st of l.strokes)drawStrokeSet(st,0);
+       ctx=previous;
+       cached={canvas:raster,width:raster.width,height:raster.height,docWidth:S.docWidth,docHeight:S.docHeight,count:l.strokes.length};layerRasterCache.set(l.id,cached);
+     }
+     ctx.drawImage(cached.canvas,0,0,S.docWidth,S.docHeight);
+   }else{
+     layerRasterCache.delete(l.id);
+     for(const st of l.strokes)drawStrokeSet(st,t);
+   }
+   ctx.restore();
+ }
  ctx=old;return out;
 }
 async function exportGif(){if(!window.GIF){alert("GIF encoder could not load. Check your internet connection, then reload.");return}let gif=new GIF({workers:2,quality:12,width:S.docWidth,height:S.docHeight,workerScript:"https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js"});let fps=12,dur=+$("loop").value,frames=Math.ceil(fps*dur);for(let i=0;i<frames;i++)gif.addFrame(renderExport(i/fps),{delay:1000/fps,copy:true});gif.on("finished",blob=>download(blob,"wobble-animation.gif"));gif.render()}

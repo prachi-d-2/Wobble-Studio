@@ -6,16 +6,30 @@
 <style>
 :root{color-scheme:dark;--bg:#17191f;--panel:#22252d;--line:#393d48;--text:#f4f5f7;--muted:#aab0bd;--accent:#b8f36b}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,sans-serif;overscroll-behavior:none}body{display:flex;flex-direction:column;overflow:hidden}
-header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d2027;border-bottom:1px solid var(--line);flex-wrap:wrap}.brand{font-weight:800;margin-right:auto}.brand span{color:var(--accent)}button,.file-label,select,input[type=color],input[type=text]{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 9px;font:inherit}button{cursor:pointer}button.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}button:disabled{opacity:.4}body.options-hidden aside{display:none}body.options-hidden #stage{flex:1}#showOptions{display:none;position:fixed;right:12px;top:12px;z-index:20;box-shadow:0 4px 18px #0008}body.options-hidden #showOptions{display:block}main{display:flex;flex:1;min-height:0}#stage{position:relative;flex:1;min-width:0;min-height:0;background:#f8f7f2;overflow:hidden}canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;left:10px;bottom:10px;background:#17191fdc;color:#eee;padding:6px 8px;border-radius:7px;font-size:11px;pointer-events:none}aside{width:300px;max-width:42vw;background:#1d2027;border-left:1px solid var(--line);padding:11px;overflow:auto;display:flex;flex-direction:column;gap:13px}section{display:grid;gap:7px}h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0}.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.row label{flex:1;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{height:36px;width:45px;padding:2px}select{width:100%}.small{font-size:11px;color:var(--muted);line-height:1.4}.palette{display:flex;gap:5px;flex-wrap:wrap}.swatch{width:22px;height:22px;border-radius:50%;border:2px solid #ffffff55;padding:0}.layer{display:flex;align-items:center;gap:5px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}.layer.selected{border-color:var(--accent)}.layer input{width:100px;min-width:0;padding:5px}.layer .pick{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.layer button{padding:4px 6px}.layerList{display:grid;gap:5px}footer{padding:6px 10px;border-top:1px solid var(--line);background:#1d2027;color:var(--muted);font-size:11px}
+header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d2027;border-bottom:1px solid var(--line);flex-wrap:wrap}.brand{font-weight:800;margin-right:auto}.brand span{color:var(--accent)}button,.file-label,select,input[type=color],input[type=text]{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 9px;font:inherit}button{cursor:pointer}button.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}button:disabled{opacity:.4}body.options-hidden aside{display:none}body.options-hidden #stage{flex:1}#showOptions{display:none;position:fixed;right:12px;top:12px;z-index:20;box-shadow:0 4px 18px #0008}body.options-hidden #showOptions{display:block}main{display:flex;flex:1;min-height:0}#stage{position:relative;flex:1;min-width:0;min-height:0;background:#f8f7f2;overflow:hidden}canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}#hud{position:absolute;left:10px;bottom:10px;background:#17191fdc;color:#eee;padding:6px 8px;border-radius:7px;font-size:11px;pointer-events:none}aside{width:300px;max-width:42vw;background:#1d2027;border-left:1px solid var(--line);padding:11px;overflow:auto;display:flex;flex-direction:column;gap:13px}section{display:grid;gap:7px}h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0}.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.row label{flex:1;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{height:36px;width:45px;padding:2px}select{width:100%}.small{font-size:11px;color:var(--muted);line-height:1.4}.palette{display:flex;gap:5px;flex-wrap:wrap}.swatch{width:22px;height:22px;border-radius:50%;border:2px solid #ffffff55;padding:0}.layer{display:flex;align-items:center;gap:5px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}.layer.selected{border-color:var(--accent)}.layer input{width:100px;min-width:0;padding:5px}.layer .pick{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.layer button{padding:4px 6px}.layer .visibility{width:34px;min-width:34px;height:34px;padding:0;font-size:17px;line-height:1;touch-action:manipulation}.layer .visibility[aria-pressed="false"]{opacity:.5}.layerList{display:grid;gap:5px}.layer .visibility{font-size:19px}.layer .visibility[aria-pressed="true"]{color:var(--accent);opacity:1}.layer .visibility[aria-pressed="false"]{color:var(--muted);opacity:.7}#canvasSetup{position:fixed;inset:0;z-index:100;background:#11141beF;display:grid;place-items:center;padding:18px}#canvasSetup[hidden]{display:none}.setup-card{width:min(520px,100%);background:#22252d;border:1px solid #454b58;border-radius:16px;padding:22px;box-shadow:0 20px 70px #0008;display:grid;gap:14px}.setup-card h1{font-size:22px;margin:0}.setup-card p{color:var(--muted);margin:0}.setup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.setup-grid button{padding:12px;text-align:left}.setup-grid button small{display:block;color:var(--muted);margin-top:4px}.setup-custom{display:grid;grid-template-columns:1fr 1fr;gap:10px}.setup-custom label{display:grid;gap:5px;color:var(--muted)}.setup-custom input{background:#17191f;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit}.setup-card .primary{background:#b8f36b;color:#17191f;border-color:#b8f36b;font-weight:800}footer{padding:6px 10px;border-top:1px solid var(--line);background:#1d2027;color:var(--muted);font-size:11px}
 @media(max-width:720px){main{flex-direction:column}aside{width:100%;max-width:none;max-height:40vh;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}aside section:first-child,aside section:nth-child(3){grid-column:1/-1}header button{padding:6px 7px}#stage{min-height:42vh}}
 </style>
 </head>
 <body>
+<div id="canvasSetup" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+ <div class="setup-card">
+  <h1 id="setupTitle">Choose your canvas</h1>
+  <p>Set the artwork dimensions before you start. Exports use these full dimensions.</p>
+  <div class="setup-grid">
+   <button type="button" data-w="1024" data-h="1024">Square <small>1024 × 1024</small></button>
+   <button type="button" data-w="1920" data-h="1080">Landscape <small>1920 × 1080</small></button>
+   <button type="button" data-w="1080" data-h="1920">Portrait <small>1080 × 1920</small></button>
+   <button type="button" data-w="2048" data-h="2048">Large square <small>2048 × 2048</small></button>
+  </div>
+  <div class="setup-custom"><label>Width (px)<input id="customW" type="number" min="128" max="8192" value="1600"></label><label>Height (px)<input id="customH" type="number" min="128" max="8192" value="1200"></label></div>
+  <button id="createCanvas" class="primary" type="button">Create canvas</button>
+ </div>
+</div>
 <header>
  <div class="brand">Wobble <span>Studio</span></div>
  <button id="penBtn" class="active">✎ Draw</button><button id="eraseBtn">⌫ Erase</button><button id="pickerBtn">⌕ Pick</button><button id="selectBtn">▧ Move</button>
  <button id="undoBtn">↶</button><button id="redoBtn">↷</button><button id="clearBtn">Clear</button><button id="animateBtn">Ⅱ Animate</button>
- <button id="saveBtn">Save</button><button id="pngBtn">PNG</button><button id="gifBtn">GIF</button><button id="mp4Btn">MP4</button><button id="projectBtn">Project</button><button id="hideOptionsBtn" title="Hide options for fullscreen drawing">Hide options</button><button id="fullscreenBtn" title="Toggle fullscreen">Fullscreen</button>
+ <button id="saveBtn">Save</button><button id="pngBtn">Full PNG</button><button id="gifBtn">GIF</button><button id="mp4Btn">MP4</button><button id="projectBtn">Project</button><button id="hideOptionsBtn" title="Hide options for fullscreen drawing">Hide options</button><button id="fullscreenBtn" title="Toggle fullscreen">Fullscreen</button>
  <label class="file-label" for="importFile">Import</label><input id="importFile" type="file" accept="image/*,.json" hidden>
 </header>
 <button id="showOptions">Show options</button><main><div id="stage"><canvas id="canvas"></canvas><div id="hud">Ready · Apple Pencil preferred</div></div>
@@ -43,14 +57,24 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
 <script>
 (()=>{"use strict";
 const $=id=>document.getElementById(id), canvas=$("canvas"),stage=$("stage"),hud=$("hud"); let ctx=canvas.getContext("2d");
-const S={tool:"pen",playing:true,activePointers:new Set(),pencilActive:false,current:null,layers:[{id:1,name:"Layer 1",strokes:[],opacity:1,blend:"source-over",group:null,visible:true}],active:1,nextId:2,selected:new Set([1]),undo:[],redo:[],colors:[],viewScale:1,viewX:0,viewY:0,moveStart:null};
+const S={tool:"pen",playing:true,activePointers:new Set(),pencilActive:false,current:null,layers:[{id:1,name:"Layer 1",strokes:[],opacity:1,blend:"source-over",group:null,visible:true}],active:1,nextId:2,selected:new Set([1]),undo:[],redo:[],colors:[],viewScale:1,viewX:0,viewY:0,moveStart:null,docWidth:1600,docHeight:1200,created:false};
 const getLayer=()=>S.layers.find(l=>l.id===S.active)||S.layers[0];
 const settings=()=>({color:$("color").value,size:+$("size").value,opacity:+$("opacity").value/100,pressure:+$("pressure").value/100,smoothing:+$("smooth").value/100,brush:$("brush").value,anim:$("animStyle").value,intensity:+$("intensity").value,speed:+$("speed").value,freq:+$("freq").value,loop:+$("loop").value,seamless:$("seamless").checked});
-function resize(){let r=stage.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,r.width*d);canvas.height=Math.max(1,r.height*d);render()}
+function resize(){
+ if(!S.created)return;
+ const r=stage.getBoundingClientRect(),fit=Math.min(r.width/S.docWidth,r.height/S.docHeight),w=Math.max(1,S.docWidth*fit),h=Math.max(1,S.docHeight*fit),d=Math.min(devicePixelRatio||1,2);
+ canvas.style.width=w+'px';canvas.style.height=h+'px';canvas.style.left=((r.width-w)/2)+'px';canvas.style.top=((r.height-h)/2)+'px';canvas.style.right='auto';canvas.style.bottom='auto';
+ canvas.width=Math.max(1,Math.round(S.docWidth*d));canvas.height=Math.max(1,Math.round(S.docHeight*d));render();
+}
 new ResizeObserver(resize).observe(stage);
-function snap(){return JSON.stringify({layers:S.layers,active:S.active,nextId:S.nextId})}
+function createCanvas(w,h){
+ w=Math.round(Number(w));h=Math.round(Number(h));
+ if(!Number.isFinite(w)||!Number.isFinite(h)||w<128||h<128||w>8192||h>8192){alert('Canvas dimensions must be between 128 and 8192 pixels.');return}
+ S.docWidth=w;S.docHeight=h;S.created=true;$('canvasSetup').hidden=true;resize();autosave();hud.textContent=`Canvas created · ${w} × ${h}px`;
+}
+function snap(){return JSON.stringify({layers:S.layers,active:S.active,nextId:S.nextId,docWidth:S.docWidth,docHeight:S.docHeight})}
 function checkpoint(){S.undo.push(snap());if(S.undo.length>70)S.undo.shift();S.redo=[]}
-function restore(raw){let d=JSON.parse(raw);S.layers=d.layers;S.active=d.active;S.nextId=d.nextId;S.selected=new Set([S.active]);drawLayers();render();autosave()}
+function restore(raw){let d=JSON.parse(raw);S.layers=d.layers;S.active=d.active;S.nextId=d.nextId;if(d.docWidth)S.docWidth=d.docWidth;if(d.docHeight)S.docHeight=d.docHeight;S.selected=new Set([S.active]);drawLayers();render();autosave()}
 function undo(){if(!S.undo.length)return;S.redo.push(snap());restore(S.undo.pop())}
 function redo(){if(!S.redo.length)return;S.undo.push(snap());restore(S.redo.pop())}
 function autosave(){try{localStorage.setItem("wobbleStudioAuto",snap())}catch(e){}}
@@ -77,7 +101,7 @@ function animPoints(st,t){let p=st.points,s=st.s;if(!p.length||s.anim==="static"
 }else if(s.anim==="wave2"){dx=(Math.sin(w+phase)+Math.sin(w*2-phase)*.45)*a*.65;dy=(Math.cos(w*.8+phase)+Math.cos(w*1.7-phase)*.35)*a*.55
 }else{dx=(nSmooth(u*12+phase)*.7+Math.sin(w+phase)*.3)*a;dy=(nSmooth(u*15+phase+8)*.7+Math.cos(w+phase)*.3)*a}return {...q,x:q.x+dx,y:q.y+dy}})}
 function path(points,c=ctx){if(!points.length)return;c.beginPath();c.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length-1;i++){let p=points[i],n=points[i+1];c.quadraticCurveTo(p.x,p.y,(p.x+n.x)/2,(p.y+n.y)/2)}if(points.length>1)c.lineTo(points.at(-1).x,points.at(-1).y)}
-function drawOne(st,t,mirror=0){let pts=animPoints(st,t);if(!pts.length)return;ctx.save();if(mirror===1){ctx.translate(canvas.clientWidth,0);ctx.scale(-1,1)}if(mirror===2){ctx.translate(0,canvas.clientHeight);ctx.scale(1,-1)}if(mirror===3){ctx.translate(canvas.clientWidth,canvas.clientHeight);ctx.scale(-1,-1)}
+function drawOne(st,t,mirror=0){let pts=animPoints(st,t);if(!pts.length)return;ctx.save();if(mirror===1){ctx.translate(S.docWidth,0);ctx.scale(-1,1)}if(mirror===2){ctx.translate(0,S.docHeight);ctx.scale(1,-1)}if(mirror===3){ctx.translate(S.docWidth,S.docHeight);ctx.scale(-1,-1)}
 let s=st.s;
 ctx.globalAlpha*=s.opacity;
 ctx.globalCompositeOperation=st.tool==="eraser"?"destination-out":"source-over";
@@ -148,21 +172,16 @@ function drawStrokeSet(st,t){
   if(mode==="both")drawOne(st,t,3);
 }
 function render(t=performance.now()/1000){
-  const r=stage.getBoundingClientRect(),d=canvas.width/Math.max(1,r.width);
-  ctx.setTransform(d,0,0,d,0,0);
-  ctx.globalAlpha=1;ctx.globalCompositeOperation="source-over";
-  ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,r.width,r.height);
-  if($("grid").checked){ctx.save();ctx.strokeStyle="#9aa0aa44";ctx.lineWidth=1;for(let x=0;x<r.width;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,r.height);ctx.stroke()}for(let y=0;y<r.height;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(r.width,y);ctx.stroke()}ctx.restore()}
-  for(const l of S.layers){
-    if(!l.visible)continue;
-    ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";
-    for(const st of l.strokes)drawStrokeSet(st,t);
-    ctx.restore();
-  }
-  if(S.current)drawStrokeSet(S.current,t);
-  if(S.playing)requestAnimationFrame(x=>render(x/1000));
+ if(!S.created||!canvas.width||!canvas.height)return;
+ const d=canvas.width/S.docWidth;
+ ctx.setTransform(d,0,0,d,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation="source-over";
+ ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,S.docWidth,S.docHeight);
+ if($("grid").checked){ctx.save();ctx.strokeStyle="#9aa0aa44";ctx.lineWidth=1;for(let x=0;x<S.docWidth;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,S.docHeight);ctx.stroke()}for(let y=0;y<S.docHeight;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(S.docWidth,y);ctx.stroke()}ctx.restore()}
+ for(const l of S.layers){if(!l.visible)continue;ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";for(const st of l.strokes)drawStrokeSet(st,t);ctx.restore()}
+ if(S.current)drawStrokeSet(S.current,t);
+ if(S.playing)requestAnimationFrame(x=>render(x/1000));
 }
-function pos(e){let r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top,pressure:e.pointerType==="pen"?(e.pressure||.5):.5,time:performance.now()}}
+function pos(e){let r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*S.docWidth/Math.max(1,r.width),y:(e.clientY-r.top)*S.docHeight/Math.max(1,r.height),pressure:e.pointerType==="pen"?(e.pressure||.5):.5,time:performance.now()}}
 function allow(e){
   // Mouse always draws. Pen is preferred but touch is allowed unless Pencil-only is enabled.
   if(e.pointerType==="mouse")return true;
@@ -275,15 +294,16 @@ function drawLayers(){
   row.ondragover=e=>e.preventDefault();
   row.ondrop=e=>{e.preventDefault();let from=S.layers.findIndex(x=>x.id===+e.dataTransfer.getData("text/plain")),to=S.layers.findIndex(x=>x.id===l.id);if(from>=0&&to>=0&&from!==to){checkpoint();let a=S.layers.splice(from,1)[0];S.layers.splice(to,0,a);drawLayers();render();autosave()}};
   let sel=document.createElement("input");sel.type="checkbox";sel.checked=S.selected.has(l.id);sel.title="Select for grouping";sel.onchange=()=>{if(sel.checked)S.selected.add(l.id);else S.selected.delete(l.id)};
-  let vis=document.createElement("input");vis.type="checkbox";vis.checked=l.visible;vis.title="Visible";vis.onchange=()=>{checkpoint();l.visible=vis.checked;render();autosave()};
+  let vis=document.createElement("button");vis.type="button";vis.className="visibility";vis.textContent=l.visible?"◉":"◌";vis.title=l.visible?"Hide layer":"Show layer";vis.setAttribute("aria-label",vis.title);vis.setAttribute("aria-pressed",String(!!l.visible));vis.onclick=()=>{checkpoint();l.visible=!l.visible;drawLayers();render();autosave()};
   let name=document.createElement("button");name.className="pick";name.textContent=(l.group?"↳ ":"")+l.name+(l.group?" · grouped":"");name.ondblclick=()=>{let n=prompt("Layer name",l.name);if(n){checkpoint();l.name=n;drawLayers();autosave()}};
-  name.onclick=()=>{S.active=l.id;$("layerOpacity").value=l.opacity*100;$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers()};
+  name.onclick=()=>{S.active=l.id;$("layerOpacity").value=Math.round(l.opacity*100);$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers();render()};
   let count=document.createElement("span");count.className="small";count.textContent=l.strokes.length+"";
   row.append(sel,vis,name,count);root.append(row)
  });
 }
 $("addLayer").onclick=()=>{checkpoint();let l={id:S.nextId++,name:"Layer "+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(l);S.active=l.id;S.selected=new Set([l.id]);drawLayers();render();autosave()};
-$("layerOpacity").oninput=e=>{getLayer().opacity=+e.target.value/100;$("layerOpacityV").textContent=e.target.value+"%";render();autosave()};
+$("layerOpacity").oninput=e=>{const layer=getLayer();layer.opacity=+e.target.value/100;$("layerOpacityV").textContent=e.target.value+"%";render();autosave()};
+$("layerOpacity").addEventListener("pointerdown",()=>checkpoint());$("layerOpacity").addEventListener("keydown",e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight")checkpoint()});
 $("blend").onchange=e=>{checkpoint();getLayer().blend=e.target.value;render();autosave()};
 $("groupBtn").onclick=()=>{
  if(S.selected.size<2){alert("Tick the first checkbox on at least two layers to group them.");return}
@@ -300,26 +320,33 @@ $("ungroupBtn").onclick=()=>{
  drawLayers();autosave();hud.textContent="Ungrouped selected layer groups";
 };
 
-for(let id of ["size","opacity","pressure","smooth","intensity","speed","freq","loop","layerOpacity"]){$(id).oninput=()=>{let suffix=id==="opacity"||id==="pressure"||id==="smooth"||id==="layerOpacity"?"%":id==="speed"?"×":"";$((id==="freq"?"freq":id)+"V").textContent=$(id).value+suffix;if(id==="layerOpacity")getLayer().opacity=+$(id).value/100;render()}}
+for(let id of ["size","opacity","pressure","smooth","intensity","speed","freq","loop"]){$(id).oninput=()=>{let suffix=id==="opacity"||id==="pressure"||id==="smooth"?"%":id==="speed"?"×":"";$((id==="freq"?"freq":id)+"V").textContent=$(id).value+suffix;render()}}
 function setColor(c){$("color").value=c;$("wheel").value=c}
 function rememberColor(c){S.colors=[c,...S.colors.filter(x=>x!==c)].slice(0,30);drawPalette()}
 function drawPalette(){let root=$("palette");root.replaceChildren();S.colors.forEach(c=>{let b=document.createElement("button");b.className="swatch";b.style.background=c;b.title=c;b.onclick=()=>setColor(c);root.append(b)})}
 $("color").oninput=e=>{setColor(e.target.value);rememberColor(e.target.value)};$("wheel").oninput=e=>{setColor(e.target.value);rememberColor(e.target.value)};$("wheelBtn").onclick=()=>$("wheelWrap").hidden=!$("wheelWrap").hidden;
 function sampleColor(x,y){try{let d=ctx.getImageData(Math.round(x*canvas.width/canvas.clientWidth),Math.round(y*canvas.height/canvas.clientHeight),1,1).data;return "#"+[...d.slice(0,3)].map(v=>v.toString(16).padStart(2,"0")).join("")}catch(e){return null}}
-function stateProject(){return {version:2,layers:S.layers,active:S.active,nextId:S.nextId,colors:S.colors}}
+function stateProject(){return {version:2,layers:S.layers,active:S.active,nextId:S.nextId,colors:S.colors,docWidth:S.docWidth,docHeight:S.docHeight}}
 function download(blob,name){let u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1200)}
 $("saveBtn").onclick=()=>{autosave();hud.textContent="Autosaved locally"};
 $("projectBtn").onclick=()=>download(new Blob([JSON.stringify(stateProject())],{type:"application/json"}),"wobble-project.json");
-$("pngBtn").onclick=()=>{let out=renderExport(0);out.toBlob(b=>download(b,"wobble-art.png"))};
-function renderExport(t){let out=document.createElement("canvas");out.width=canvas.width;out.height=canvas.height;let c=out.getContext("2d"),scale=out.width/canvas.clientWidth;c.scale(scale,scale);c.fillStyle="#f8f7f2";c.fillRect(0,0,canvas.clientWidth,canvas.clientHeight);let old=ctx;ctx=c;for(let l of S.layers){if(!l.visible)continue;c.save();c.globalAlpha=l.opacity;c.globalCompositeOperation=l.blend||"source-over";for(let st of l.strokes)drawStrokeSet(st,t);c.restore()}ctx=old;return out}
-async function exportGif(){if(!window.GIF){alert("GIF encoder could not load. Check your internet connection, then reload.");return}let gif=new GIF({workers:2,quality:12,width:canvas.width,height:canvas.height,workerScript:"https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js"});let fps=12,dur=+$("loop").value,frames=Math.ceil(fps*dur);for(let i=0;i<frames;i++)gif.addFrame(renderExport(i/fps),{delay:1000/fps,copy:true});gif.on("finished",blob=>download(blob,"wobble-animation.gif"));gif.render()}
+$("pngBtn").onclick=()=>{let out=renderExport(0);out.toBlob(b=>{if(b)download(b,`wobble-art-${S.docWidth}x${S.docHeight}.png`)})};
+function renderExport(t){
+ const out=document.createElement("canvas");out.width=S.docWidth;out.height=S.docHeight;
+ const c=out.getContext("2d"),old=ctx;ctx=c;ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation="source-over";
+ ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,S.docWidth,S.docHeight);
+ for(const l of S.layers){if(!l.visible)continue;ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";for(const st of l.strokes)drawStrokeSet(st,t);ctx.restore()}
+ ctx=old;return out;
+}
+async function exportGif(){if(!window.GIF){alert("GIF encoder could not load. Check your internet connection, then reload.");return}let gif=new GIF({workers:2,quality:12,width:S.docWidth,height:S.docHeight,workerScript:"https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js"});let fps=12,dur=+$("loop").value,frames=Math.ceil(fps*dur);for(let i=0;i<frames;i++)gif.addFrame(renderExport(i/fps),{delay:1000/fps,copy:true});gif.on("finished",blob=>download(blob,"wobble-animation.gif"));gif.render()}
 function exportVideo(mime){let out=renderExport(0),stream=out.captureStream(30);let rec;try{rec=new MediaRecorder(stream,{mimeType:mime})}catch(e){alert("This browser does not support MP4 recording. Try Safari on a recent iPad or export WebM on a compatible browser.");return}let chunks=[];rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};rec.onstop=()=>{let type=rec.mimeType||mime;download(new Blob(chunks,{type}),type.includes("mp4")?"wobble-animation.mp4":"wobble-animation.webm")};rec.start();let start=performance.now(),duration=+$("loop").value;function tick(){let t=(performance.now()-start)/1000,frame=renderExport(t),c=out.getContext("2d");c.clearRect(0,0,out.width,out.height);c.drawImage(frame,0,0);if(t<duration)requestAnimationFrame(tick);else rec.stop()}tick()}
 $("gifBtn").onclick=exportGif;$("mp4Btn").onclick=()=>{let m=["video/mp4;codecs=h264","video/mp4","video/webm;codecs=vp9","video/webm"].find(x=>MediaRecorder.isTypeSupported(x));if(!m){alert("No supported video recording format found in this browser.");return}exportVideo(m)};
-$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;if(f.name.toLowerCase().endsWith(".json")){let d=JSON.parse(await f.text());S.layers=d.layers||[];S.active=d.active||S.layers[0]?.id;S.nextId=d.nextId||S.layers.length+1;S.colors=d.colors||[];drawLayers();drawPalette();render()}else{let img=new Image();img.onload=()=>{checkpoint();let off=document.createElement("canvas");off.width=canvas.width;off.height=canvas.height;off.getContext("2d").drawImage(img,0,0,off.width,off.height);let data=off.getContext("2d").getImageData(0,0,off.width,off.height);let imageData=data;let stroke={tool:"image",s:{color:"#000",size:1,opacity:1,pressure:0,smoothing:0,brush:"pen",anim:"static",intensity:0,speed:1,freq:1,loop:1,seamless:true},points:[{x:0,y:0},{x:canvas.clientWidth,y:canvas.clientHeight}],image:img.src};getLayer().strokes.push(stroke);alert("Image import is added as a simple preview placeholder in this prototype. For full image-layer support, this needs a dedicated image object renderer.");render()};img.src=URL.createObjectURL(f)}e.target.value=""};
+$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;if(f.name.toLowerCase().endsWith(".json")){let d=JSON.parse(await f.text());S.layers=d.layers||[];S.active=d.active||S.layers[0]?.id;S.nextId=d.nextId||S.layers.length+1;S.colors=d.colors||[];if(d.docWidth&&d.docHeight){S.docWidth=d.docWidth;S.docHeight=d.docHeight;S.created=true;$("canvasSetup").hidden=true;resize()}drawLayers();drawPalette();render()}else{let img=new Image();img.onload=()=>{checkpoint();let off=document.createElement("canvas");off.width=canvas.width;off.height=canvas.height;off.getContext("2d").drawImage(img,0,0,off.width,off.height);let data=off.getContext("2d").getImageData(0,0,off.width,off.height);let imageData=data;let stroke={tool:"image",s:{color:"#000",size:1,opacity:1,pressure:0,smoothing:0,brush:"pen",anim:"static",intensity:0,speed:1,freq:1,loop:1,seamless:true},points:[{x:0,y:0},{x:canvas.clientWidth,y:canvas.clientHeight}],image:img.src};getLayer().strokes.push(stroke);alert("Image import is added as a simple preview placeholder in this prototype. For full image-layer support, this needs a dedicated image object renderer.");render()};img.src=URL.createObjectURL(f)}e.target.value=""};
 $("fitBtn").onclick=()=>{S.viewScale=1;S.viewX=S.viewY=0;render()};
 canvas.addEventListener("click",e=>{if(S.tool==="picker"){let p=pos(e),c=sampleColor(p.x,p.y);if(c){setColor(c);rememberColor(c)}}});
 window.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"){e.preventDefault();undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="y"){e.preventDefault();redo()}});
-try{let saved=localStorage.getItem("wobbleStudioAuto");if(saved){let d=JSON.parse(saved);S.layers=d.layers||S.layers;S.active=d.active||1;S.nextId=d.nextId||2}}catch(e){}
+try{let saved=localStorage.getItem("wobbleStudioAuto");if(saved){let d=JSON.parse(saved);S.layers=(d.layers||S.layers).map(l=>({...l,visible:l.visible!==false,opacity:Number.isFinite(+l.opacity)?+l.opacity:1}));S.active=d.active||1;S.nextId=d.nextId||2;if(d.docWidth)S.docWidth=d.docWidth;if(d.docHeight)S.docHeight=d.docHeight}}catch(e){}
+$("layerOpacity").value=Math.round((getLayer()?.opacity??1)*100);$("layerOpacityV").textContent=$("layerOpacity").value+"%";
 $("hideOptionsBtn").onclick=()=>{document.body.classList.add("options-hidden");hud.textContent="Options hidden · tap Show options to return"};
 $("showOptions").onclick=()=>{document.body.classList.remove("options-hidden");resize()};
 $("fullscreenBtn").onclick=async()=>{
@@ -329,7 +356,12 @@ $("fullscreenBtn").onclick=async()=>{
  }catch(_){hud.textContent="Fullscreen isn't available in this browser; use Hide options instead"}
 };
 document.addEventListener("fullscreenchange",()=>{resize();$("fullscreenBtn").textContent=document.fullscreenElement?"Exit fullscreen":"Fullscreen"});
-drawLayers();resize();render();
+drawLayers();
+ document.querySelectorAll('#canvasSetup [data-w]').forEach(b=>b.addEventListener('click',()=>{const w=+b.dataset.w,h=+b.dataset.h;$('customW').value=w;$('customH').value=h;createCanvas(w,h)}));
+ $('createCanvas').onclick=()=>createCanvas($('customW').value,$('customH').value);
+ // Require an explicit canvas choice on a new visit; autosaved artwork can be resumed at its saved dimensions.
+ try{const prior=localStorage.getItem('wobbleStudioAuto');if(prior){const parsed=JSON.parse(prior);if(parsed.docWidth&&parsed.docHeight){S.docWidth=parsed.docWidth;S.docHeight=parsed.docHeight;S.created=true;$('canvasSetup').hidden=true;}}}catch(_){}
+ if(S.created){resize();render()}else{$('canvasSetup').hidden=false}
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>

@@ -27,7 +27,7 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
 </div>
 <header>
  <div class="brand">Wobble <span>Studio</span></div>
- <button id="penBtn" class="active">✎ Draw</button><button id="eraseBtn">⌫ Erase</button><button id="pickerBtn">⌕ Pick</button><button id="selectBtn">▧ Move</button>
+ <button id="penBtn" class="active">✎ Draw</button><button id="eraseBtn">⌫ Erase</button><button id="pickerBtn">⌕ Pick</button><button id="selectBtn">▧ Move / Transform</button><button id="cropModeBtn">✂ Crop on canvas</button>
  <button id="undoBtn">↶</button><button id="redoBtn">↷</button><button id="clearBtn">Clear</button><button id="animateBtn">▶ Preview animation</button>
  <button id="saveBtn">Save</button><button id="pngBtn">Full PNG</button><button id="gifBtn">GIF</button><button id="mp4Btn">MP4</button><button id="projectBtn">Project</button><button id="hideOptionsBtn" title="Hide options for fullscreen drawing">Hide options</button><button id="fullscreenBtn" title="Toggle fullscreen">Fullscreen</button>
  <label class="file-label" for="importFile">Import</label><input id="importFile" type="file" accept="image/*,video/*,.json" hidden>
@@ -47,11 +47,11 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
 <div class="row"><label>Frequency <span id="freqV">2.5</span></label></div><input id="freq" type="range" min=".3" max="12" step=".1" value="2.5">
 <div class="row"><label>Loop seconds <span id="loopV">2.5</span></label></div><input id="loop" type="range" min="1" max="8" step=".1" value="2.5">
 <label class="row"><input id="seamless" type="checkbox" checked> Seamless loop</label></section>
-<section><h2>Layers</h2><div class="row"><button id="addLayer">＋ Layer</button><button id="deleteLayerBtn" title="Delete only the active layer">Delete active</button><button id="deleteSelectedBtn" title="Delete only the checked layers">Delete checked (0)</button></div><div class="row"><button id="selectAllLayersBtn">Select all</button><button id="clearLayerSelectionBtn">Clear selection</button><button id="groupBtn">Group checked</button><button id="ungroupBtn">Ungroup checked</button></div><div class="small" id="layerSelectionHint">Check layers to select them for grouping or deletion. Clicking a layer name makes it active.</div><div class="layerList" id="layers"></div>
+<section><h2>Layers</h2><div class="row"><button id="addLayer">＋ Layer</button><button id="deleteLayerBtn">Delete layer</button><button id="groupBtn">Group selected</button><button id="ungroupBtn">Ungroup</button></div><div class="layerList" id="layers"></div>
 <div class="row"><label>Opacity <span id="layerOpacityV">100%</span></label></div><input id="layerOpacity" type="range" min="0" max="100" value="100">
 <label>Blend mode</label><select id="blend"><option value="source-over">Normal</option><option value="multiply">Multiply</option><option value="screen">Screen</option><option value="overlay">Overlay</option><option value="darken">Darken</option><option value="lighten">Lighten</option><option value="color-dodge">Color dodge</option><option value="color-burn">Color burn</option><option value="hard-light">Hard light</option><option value="soft-light">Soft light</option><option value="difference">Difference</option><option value="exclusion">Exclusion</option><option value="lighter">Add / Linear dodge</option><option value="color">Color</option><option value="hue">Hue</option><option value="saturation">Saturation</option><option value="luminosity">Luminosity</option></select>
 
-<section id="mediaPlacement" hidden><h2>Media placement</h2><div class="small">Select a media layer, then drag it on the canvas with Move. Adjust size, rotation, and crop here.</div>
+<section id="mediaPlacement" hidden><h2>Media placement</h2><div class="small">Edit directly on the canvas: drag inside to move; pull a corner to resize proportionally; pull an edge to stretch. Tap Crop on canvas, then drag an edge to crop. Fine controls are optional.</div>
 <div class="row"><label>X position <span id="mediaXV">0</span></label></div><input id="mediaX" type="range" min="-8192" max="8192" value="0">
 <div class="row"><label>Y position <span id="mediaYV">0</span></label></div><input id="mediaY" type="range" min="-8192" max="8192" value="0">
 <div class="row"><label>Width <span id="mediaWV">100%</span></label></div><input id="mediaW" type="range" min="1" max="400" value="100">
@@ -61,14 +61,14 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
 <div class="row"><label>Crop top <span id="cropTV">0%</span></label></div><input id="cropT" type="range" min="0" max="90" value="0">
 <div class="row"><label>Crop right <span id="cropRV">0%</span></label></div><input id="cropR" type="range" min="0" max="90" value="0">
 <div class="row"><label>Crop bottom <span id="cropBV">0%</span></label></div><input id="cropB" type="range" min="0" max="90" value="0">
-<button id="mediaFitBtn" type="button">Fit media to canvas</button><button id="mediaResetCropBtn" type="button">Reset crop</button></section><div class="small">Rename a layer by double-clicking its name. Check layer rows to multi-select for grouping or deletion. Select all / Clear selection are available above the list. Drag rows to reorder.</div></section>
+<button id="mediaFitBtn" type="button">Fit media to canvas</button><button id="mediaResetCropBtn" type="button">Reset crop</button></section><div class="small">Rename a layer by double-clicking its name. Select several layers with the checkbox to group. Drag layer rows to reorder.</div></section>
 <section><h2>Canvas tools</h2><label class="row"><input id="pencilOnly" type="checkbox"> Pencil-only drawing</label><label class="row"><input id="palmGuard" type="checkbox" checked> Palm/touch guard</label><label class="row"><input id="grid" type="checkbox"> Show grid</label><label class="row"><input id="symmetry" type="checkbox"> Mirror symmetry</label><label>Symmetry axis</label><select id="symAxis"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option><option value="both">Both axes</option></select>
 <button id="fitBtn">Fit / reset view</button><div class="small" id="zoomLabel">Zoom 100% · Pinch with two fingers to zoom</div><div class="small">Browser-level touch filtering is best-effort; iPadOS provides the system's native palm rejection.</div></section>
 </aside></main><footer>Personal project · autosaves in this browser · export project JSON for backups · MP4/GIF availability depends on browser codecs</footer>
 <script>
 (()=>{"use strict";
 const $=id=>document.getElementById(id), canvas=$("canvas"),stage=$("stage"),hud=$("hud"); let ctx=canvas.getContext("2d");
-const S={tool:"pen",playing:false,drawPending:false,activePointers:new Set(),touchPoints:new Map(),zoomGesture:null,pencilActive:false,current:null,layers:[{id:1,name:"Layer 1",strokes:[],opacity:1,blend:"source-over",group:null,visible:true}],active:1,nextId:2,selected:new Set(),undo:[],redo:[],colors:[],viewScale:1,viewX:0,viewY:0,moveStart:null,docWidth:1600,docHeight:1200,created:false};
+const S={tool:"pen",playing:false,drawPending:false,activePointers:new Set(),touchPoints:new Map(),zoomGesture:null,pencilActive:false,current:null,layers:[{id:1,name:"Layer 1",strokes:[],opacity:1,blend:"source-over",group:null,visible:true}],active:1,nextId:2,selected:new Set([1]),undo:[],redo:[],colors:[],viewScale:1,viewX:0,viewY:0,moveStart:null,docWidth:1600,docHeight:1200,created:false};
 const mediaCache=new Map();
 const getLayer=()=>S.layers.find(l=>l.id===S.active)||S.layers[0];
 const settings=()=>({color:$("color").value,size:+$("size").value,opacity:+$("opacity").value/100,pressure:+$("pressure").value/100,smoothing:+$("smooth").value/100,brush:$("brush").value,anim:$("animStyle").value,intensity:+$("intensity").value,speed:+$("speed").value,freq:+$("freq").value,loop:+$("loop").value,seamless:$("seamless").checked});
@@ -88,7 +88,7 @@ function createCanvas(w,h){
 }
 function snap(){return JSON.stringify({layers:S.layers,active:S.active,nextId:S.nextId,docWidth:S.docWidth,docHeight:S.docHeight})}
 function checkpoint(){S.undo.push(snap());if(S.undo.length>70)S.undo.shift();S.redo=[]}
-function restore(raw){let d=JSON.parse(raw);S.layers=d.layers;S.active=d.active;S.nextId=d.nextId;if(d.docWidth)S.docWidth=d.docWidth;if(d.docHeight)S.docHeight=d.docHeight;S.selected=new Set();drawLayers();render();autosave()}
+function restore(raw){let d=JSON.parse(raw);S.layers=d.layers;S.active=d.active;S.nextId=d.nextId;if(d.docWidth)S.docWidth=d.docWidth;if(d.docHeight)S.docHeight=d.docHeight;S.selected=new Set([S.active]);drawLayers();render();autosave()}
 function undo(){if(!S.undo.length)return;S.redo.push(snap());restore(S.undo.pop())}
 function redo(){if(!S.redo.length)return;S.undo.push(snap());restore(S.redo.pop())}
 function autosave(){try{localStorage.setItem("wobbleStudioAuto",snap())}catch(e){}}
@@ -217,6 +217,7 @@ function render(t=performance.now()/1000){
  if($("grid").checked){ctx.save();ctx.strokeStyle="#9aa0aa44";ctx.lineWidth=1;for(let x=0;x<S.docWidth;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,S.docHeight);ctx.stroke()}for(let y=0;y<S.docHeight;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(S.docWidth,y);ctx.stroke()}ctx.restore()}
  for(const l of S.layers){if(!l.visible)continue;ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";for(const st of l.strokes)drawStrokeSet(st,t);ctx.restore()}
  if(S.current)drawStrokeSet(S.current,t);
+ drawMediaSelection(activeMediaStroke());
  if(S.playing)requestAnimationFrame(x=>render(x/1000));
 }
 function applyView(){canvas.style.transform=`translate(${S.viewX}px, ${S.viewY}px) scale(${S.viewScale})`;$('zoomLabel').textContent=`Zoom ${Math.round(S.viewScale*100)}% · Pinch with two fingers to zoom`}
@@ -236,6 +237,30 @@ function allow(e){
   }
   return true;
 }
+
+function mediaHandleAt(p,st){
+  if(!st)return null;
+  const x=Number(st.x)||0,y=Number(st.y)||0,w=Math.max(1,Number(st.w)||S.docWidth),h=Math.max(1,Number(st.h)||S.docHeight);
+  const cx=x+w/2,cy=y+h/2,angle=-(Number(st.rotation)||0)*Math.PI/180,dx=p.x-cx,dy=p.y-cy;
+  // Convert the pointer to the media's unrotated local coordinates.
+  const lx=dx*Math.cos(angle)-dy*Math.sin(angle)+w/2,ly=dx*Math.sin(angle)+dy*Math.cos(angle)+h/2;
+  const tolerance=Math.max(12,18/S.viewScale);
+  const handles=[["nw",0,0],["n",w/2,0],["ne",w,0],["e",w,h/2],["se",w,h],["s",w/2,h],["sw",0,h],["w",0,h/2]];
+  for(const [name,hx,hy] of handles)if(Math.hypot(lx-hx,ly-hy)<=tolerance)return name;
+  if(lx>=0&&lx<=w&&ly>=0&&ly<=h)return "move";
+  return null;
+}
+function drawMediaSelection(st){
+  if(!st||S.tool!=="move")return;
+  const x=Number(st.x)||0,y=Number(st.y)||0,w=Math.max(1,Number(st.w)||S.docWidth),h=Math.max(1,Number(st.h)||S.docHeight);
+  const cx=x+w/2,cy=y+h/2,rot=(Number(st.rotation)||0)*Math.PI/180;
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);
+  ctx.lineWidth=Math.max(1.5,2/S.viewScale);ctx.setLineDash([7,4]);ctx.strokeStyle="#4f8cff";ctx.strokeRect(-w/2,-h/2,w,h);ctx.setLineDash([]);
+  const points=[[-w/2,-h/2],[0,-h/2],[w/2,-h/2],[w/2,0],[w/2,h/2],[0,h/2],[-w/2,h/2],[-w/2,0]];
+  const size=Math.max(8,12/S.viewScale);
+  for(const [hx,hy] of points){ctx.fillStyle="#fff";ctx.strokeStyle="#2868db";ctx.lineWidth=Math.max(1,1.5/S.viewScale);ctx.fillRect(hx-size/2,hy-size/2,size,size);ctx.strokeRect(hx-size/2,hy-size/2,size,size)}
+  ctx.restore();
+}
 function startStroke(e){
   if(e.button!==undefined&&e.button!==0)return;
   if(e.pointerType==="touch"){
@@ -254,7 +279,7 @@ function startStroke(e){
     if(col){setColor(col);rememberColor(col)}
     S.activePointers.delete(pid);return;
   }
-  if(S.tool==="move"){const st=activeMediaStroke();if(st){S.moveStart={p,layer:getLayer(),media:st,originX:st.x||0,originY:st.y||0};checkpoint();}else S.moveStart={p,layer:getLayer(),start:snap()};return}
+  if(S.tool==="move"){const st=activeMediaStroke();if(st){const handle=mediaHandleAt(p,st);if(handle){checkpoint();S.moveStart={p,layer:getLayer(),media:st,handle,originX:Number(st.x)||0,originY:Number(st.y)||0,originW:Number(st.w)||S.docWidth,originH:Number(st.h)||S.docHeight,cropL:Number(st.cropL)||0,cropT:Number(st.cropT)||0,cropR:Number(st.cropR)||0,cropB:Number(st.cropB)||0};}}return}
   if(S.current)return; // Ignore a second simultaneous contact while one stroke is active.
   checkpoint();
   const s=settings();
@@ -269,7 +294,28 @@ function moveStroke(e){
     S.touchPoints.set(pid,{x:e.clientX,y:e.clientY});
     if(S.zoomGesture&&S.touchPoints.size>=2){if(e.cancelable)e.preventDefault();const a=[...S.touchPoints.values()],mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2},dist=Math.hypot(a[1].x-a[0].x,a[1].y-a[0].y)||1;setZoomAt(S.zoomGesture.scale*dist/S.zoomGesture.distance,mid.x,mid.y,S.zoomGesture.scale,S.zoomGesture.x,S.zoomGesture.y,S.zoomGesture.mid.x,S.zoomGesture.mid.y);return;}
   }
-  if(S.moveStart&&S.activePointers.has(pid)&&S.moveStart.media){if(e.cancelable)e.preventDefault();const p=pos(e),m=S.moveStart.media;m.x=S.moveStart.originX+(p.x-S.moveStart.p.x);m.y=S.moveStart.originY+(p.y-S.moveStart.p.y);updateMediaPanel();if(!S.drawPending){S.drawPending=true;requestAnimationFrame(()=>{S.drawPending=false;render()})}return;}
+  if(S.moveStart&&S.activePointers.has(pid)&&S.moveStart.media){if(e.cancelable)e.preventDefault();const p=pos(e),g=S.moveStart,m=g.media,dx=p.x-g.p.x,dy=p.y-g.p.y;
+ if(g.handle==="move"){m.x=g.originX+dx;m.y=g.originY+dy}
+ else if(!S.cropMode){
+   let nw=g.originW,nh=g.originH;
+   if(["nw","ne","sw","se"].includes(g.handle)){
+     const sx=(g.handle.includes("e")?dx:-dx)/Math.max(1,g.originW),sy=(g.handle.includes("s")?dy:-dy)/Math.max(1,g.originH);
+     const factor=Math.max(.03,1+(Math.abs(sx)>Math.abs(sy)?sx:sy));
+     nw=Math.max(12,g.originW*factor);nh=Math.max(12,g.originH*factor);
+   }else if(g.handle==="e"||g.handle==="w")nw=Math.max(12,g.originW+(g.handle==="e"?dx:-dx));
+   else if(g.handle==="n"||g.handle==="s")nh=Math.max(12,g.originH+(g.handle==="s"?dy:-dy));
+   m.w=nw;m.h=nh;
+   if(g.handle.includes("w"))m.x=g.originX+g.originW-nw;
+   if(g.handle.includes("n"))m.y=g.originY+g.originH-nh;
+ }
+ else {
+   const dw=Math.max(12,g.originW),dh=Math.max(12,g.originH);
+   if(g.handle==="w")m.cropL=Math.max(0,Math.min(.89-g.cropR,g.cropL+dx/dw));
+   if(g.handle==="e")m.cropR=Math.max(0,Math.min(.89-g.cropL,g.cropR-dx/dw));
+   if(g.handle==="n")m.cropT=Math.max(0,Math.min(.89-g.cropB,g.cropT+dy/dh));
+   if(g.handle==="s")m.cropB=Math.max(0,Math.min(.89-g.cropT,g.cropB-dy/dh));
+ }
+ updateMediaPanel();if(!S.drawPending){S.drawPending=true;requestAnimationFrame(()=>{S.drawPending=false;render()})}return;}
   if(!S.activePointers.has(pid)||!S.current)return;
   if(e.cancelable)e.preventDefault();
   const events=(typeof e.getCoalescedEvents==="function" ? e.getCoalescedEvents() : null);
@@ -338,7 +384,7 @@ if(!("PointerEvent" in window)){
   canvas.addEventListener("touchend",e=>{for(const t of e.changedTouches)endStroke({pointerId:t.identifier,pointerType:"touch"})});
 }
 function setTool(t){S.tool=t;["penBtn","eraseBtn","pickerBtn","selectBtn"].forEach(id=>$(id).classList.toggle("active",id===({pen:"penBtn",erase:"eraseBtn",picker:"pickerBtn",move:"selectBtn"}[t])))}
-$("penBtn").onclick=()=>setTool("pen");$("eraseBtn").onclick=()=>setTool("erase");$("pickerBtn").onclick=()=>setTool("picker");$("selectBtn").onclick=()=>setTool("move");$("undoBtn").onclick=undo;$("redoBtn").onclick=redo;
+$("penBtn").onclick=()=>setTool("pen");$("eraseBtn").onclick=()=>setTool("erase");$("pickerBtn").onclick=()=>setTool("picker");$("selectBtn").onclick=()=>setTool("move");$("cropModeBtn").onclick=()=>{S.cropMode=!S.cropMode;$("cropModeBtn").classList.toggle("active",S.cropMode);$("cropModeBtn").textContent=S.cropMode?"✓ Crop mode · drag edges":"✂ Crop on canvas";setTool("move");render()};$("undoBtn").onclick=undo;$("redoBtn").onclick=redo;
 $("clearBtn").onclick=()=>{checkpoint();getLayer().strokes=[];drawLayers();render();autosave()};
 $("animateBtn").onclick=()=>{S.playing=!S.playing;$("animateBtn").textContent=S.playing?"Ⅱ Pause":"▶ Preview animation";if(S.playing)render();else render(performance.now()/1000)};
 function activeMediaStroke(){const l=getLayer();return l&&[...(l.strokes||[])].reverse().find(st=>st.kind==="image"||st.kind==="video")||null}
@@ -355,19 +401,6 @@ function mediaInputChanged(id){const st=activeMediaStroke();if(!st)return;checkp
 for(const id of ["mediaX","mediaY","mediaW","mediaH","mediaR","cropL","cropT","cropR","cropB"]){$(id).addEventListener("pointerdown",()=>checkpoint());$(id).addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key))checkpoint()});$(id).addEventListener("input",()=>{const st=activeMediaStroke();if(!st)return;const v=+$(id).value;if(id==="mediaX")st.x=v;else if(id==="mediaY")st.y=v;else if(id==="mediaW")st.w=Math.max(1,(st.baseW||st.w)*v/100);else if(id==="mediaH")st.h=Math.max(1,(st.baseH||st.h)*v/100);else if(id==="mediaR")st.rotation=v;else st[id]=v/100;$(id+"V").textContent=id==="mediaR"?v+"°":id.startsWith("crop")?v+"%":id==="mediaW"||id==="mediaH"?v+"%":v;render()})}
 $("mediaFitBtn").onclick=()=>{const st=activeMediaStroke();if(!st)return;checkpoint();const nw=st.naturalW||S.docWidth,nh=st.naturalH||S.docHeight,ratio=Math.min(S.docWidth/nw,S.docHeight/nh);st.w=nw*ratio;st.h=nh*ratio;st.baseW=st.w;st.baseH=st.h;st.x=(S.docWidth-st.w)/2;st.y=(S.docHeight-st.h)/2;st.rotation=0;updateMediaPanel();render();autosave()};
 $("mediaResetCropBtn").onclick=()=>{const st=activeMediaStroke();if(!st)return;checkpoint();st.cropL=st.cropT=st.cropR=st.cropB=0;updateMediaPanel();render();autosave()};
-function updateLayerSelectionUI(){
- const count=S.selected.size;
- const btn=$("deleteSelectedBtn");
- if(btn)btn.textContent=`Delete checked (${count})`;
- const hint=$("layerSelectionHint");
- if(hint)hint.textContent=count?`${count} layer${count===1?"":"s"} checked. Delete checked removes only these; at least one layer is kept.`:"No layers checked. Click a layer name to make it active, or check rows to select layers.";
-}
-function syncActiveLayerControls(){
- const l=getLayer();if(!l)return;
- $("layerOpacity").value=Math.round((l.opacity??1)*100);
- $("layerOpacityV").textContent=Math.round((l.opacity??1)*100)+"%";
- $("blend").value=l.blend||"source-over";
-}
 function drawLayers(){
  updateMediaPanel();
  let root=$("layers");root.replaceChildren();
@@ -378,38 +411,21 @@ function drawLayers(){
   row.ondragstart=e=>e.dataTransfer.setData("text/plain",String(l.id));
   row.ondragover=e=>e.preventDefault();
   row.ondrop=e=>{e.preventDefault();let from=S.layers.findIndex(x=>x.id===+e.dataTransfer.getData("text/plain")),to=S.layers.findIndex(x=>x.id===l.id);if(from>=0&&to>=0&&from!==to){checkpoint();let a=S.layers.splice(from,1)[0];S.layers.splice(to,0,a);drawLayers();render();autosave()}};
-  let sel=document.createElement("input");sel.type="checkbox";sel.checked=S.selected.has(l.id);sel.title="Check for multi-layer selection";sel.setAttribute("aria-label","Select "+l.name);sel.onchange=()=>{if(sel.checked)S.selected.add(l.id);else S.selected.delete(l.id);updateLayerSelectionUI()};
+  let sel=document.createElement("input");sel.type="checkbox";sel.checked=S.selected.has(l.id);sel.title="Select for grouping";sel.onchange=()=>{if(sel.checked)S.selected.add(l.id);else S.selected.delete(l.id)};
   let vis=document.createElement("button");vis.type="button";vis.className="visibility";vis.textContent=l.visible?"◉":"◌";vis.title=l.visible?"Hide layer":"Show layer";vis.setAttribute("aria-label",vis.title);vis.setAttribute("aria-pressed",String(!!l.visible));vis.onclick=()=>{checkpoint();l.visible=!l.visible;drawLayers();render();autosave()};
-  let name=document.createElement("button");name.className="pick";name.textContent=(l.group?"↳ ":"")+l.name+(l.group?" · grouped":"");name.title="Click to make active; double-click to rename";name.ondblclick=()=>{let n=prompt("Layer name",l.name);if(n){checkpoint();l.name=n;drawLayers();autosave()}};
-  name.onclick=()=>{S.active=l.id;syncActiveLayerControls();drawLayers();render()};
-  let count=document.createElement("span");count.className="small";count.textContent=(l.strokes||[]).length+"";
+  let name=document.createElement("button");name.className="pick";name.textContent=(l.group?"↳ ":"")+l.name+(l.group?" · grouped":"");name.ondblclick=()=>{let n=prompt("Layer name",l.name);if(n){checkpoint();l.name=n;drawLayers();autosave()}};
+  name.onclick=()=>{S.active=l.id;$("layerOpacity").value=Math.round(l.opacity*100);$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers();render()};
+  let count=document.createElement("span");count.className="small";count.textContent=l.strokes.length+"";
   row.append(sel,vis,name,count);root.append(row)
  });
- updateLayerSelectionUI();
 }
-function deleteLayerIds(ids){
- const unique=new Set(ids);
- if(!unique.size){hud.textContent="Check one or more layers first.";return}
- const existing=S.layers.filter(l=>unique.has(l.id));
- if(!existing.length){hud.textContent="No matching layers selected.";return}
- if(existing.length>=S.layers.length){alert("At least one layer must remain. Uncheck one layer before deleting.");return}
- checkpoint();
- S.layers=S.layers.filter(l=>!unique.has(l.id));
- S.selected=new Set([...S.selected].filter(id=>S.layers.some(l=>l.id===id)));
- if(!S.layers.some(l=>l.id===S.active))S.active=S.layers[S.layers.length-1].id;
- syncActiveLayerControls();drawLayers();render();autosave();
- hud.textContent=`Deleted ${existing.length} selected layer${existing.length===1?"":"s"}`;
-}
-$("addLayer").onclick=()=>{checkpoint();let l={id:S.nextId++,name:"Layer "+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(l);S.active=l.id;S.selected=new Set();syncActiveLayerControls();drawLayers();render();autosave()};
-$("deleteLayerBtn").onclick=()=>deleteLayerIds([S.active]);
-$("deleteSelectedBtn").onclick=()=>deleteLayerIds([...S.selected]);
-$("selectAllLayersBtn").onclick=()=>{S.selected=new Set(S.layers.map(l=>l.id));drawLayers()};
-$("clearLayerSelectionBtn").onclick=()=>{S.selected.clear();drawLayers()};
+$("addLayer").onclick=()=>{checkpoint();let l={id:S.nextId++,name:"Layer "+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(l);S.active=l.id;S.selected=new Set([l.id]);drawLayers();render();autosave()};
+$("deleteLayerBtn").onclick=()=>{if(S.layers.length<=1){alert("Keep at least one layer in the document.");return}checkpoint();const id=S.active;S.layers=S.layers.filter(l=>l.id!==id);S.active=S.layers[S.layers.length-1].id;S.selected.delete(id);if(!S.selected.size)S.selected.add(S.active);const l=getLayer();$("layerOpacity").value=Math.round(l.opacity*100);$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers();render();autosave()};
 $("layerOpacity").oninput=e=>{const layer=getLayer();layer.opacity=+e.target.value/100;$("layerOpacityV").textContent=e.target.value+"%";render();autosave()};
 $("layerOpacity").addEventListener("pointerdown",()=>checkpoint());$("layerOpacity").addEventListener("keydown",e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight")checkpoint()});
 $("blend").onchange=e=>{checkpoint();getLayer().blend=e.target.value;render();autosave()};
 $("groupBtn").onclick=()=>{
- if(S.selected.size<2){alert("Check at least two layer rows to group them.");return}
+ if(S.selected.size<2){alert("Tick the first checkbox on at least two layers to group them.");return}
  checkpoint();let gid="group-"+S.nextId++;
  let groupName=prompt("Name this group","Group "+(S.nextId-1))||("Group "+(S.nextId-1));
  S.layers.forEach(l=>{if(S.selected.has(l.id)){l.group=gid;l.groupName=groupName}});
@@ -417,7 +433,7 @@ $("groupBtn").onclick=()=>{
 };
 $("ungroupBtn").onclick=()=>{
  let targets=S.layers.filter(l=>S.selected.has(l.id)&&l.group);
- if(!targets.length){alert("Check one or more grouped layer rows first.");return}
+ if(!targets.length){alert("Select one or more grouped layers using the first checkbox.");return}
  checkpoint();let groups=new Set(targets.map(l=>l.group));
  S.layers.forEach(l=>{if(groups.has(l.group)){l.group=null;l.groupName=null}});
  drawLayers();autosave();hud.textContent="Ungrouped selected layer groups";
@@ -449,11 +465,11 @@ $("importFile").onchange=async e=>{
  const name=f.name.toLowerCase(),isJson=name.endsWith(".json")||f.type==="application/json",isImage=f.type.startsWith("image/")||/\.(png|jpe?g|gif|webp|bmp|avif|heic|heif)$/.test(name),isVideo=f.type.startsWith("video/")||/\.(mp4|mov|webm|m4v|ogv|avi)$/.test(name);
  const readData=blob=>new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(new Error("Could not read selected file"));r.readAsDataURL(blob)});
  const addMedia=(kind,media,src,nw,nh)=>{checkpoint();const id="media-"+Date.now()+"-"+Math.random().toString(36).slice(2),ratio=Math.min(S.docWidth/nw,S.docHeight/nh),w=nw*ratio,h=nh*ratio;
-  const layer={id:S.nextId++,name:(kind==="video"?"Video ":"Image ")+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(layer);S.active=layer.id;S.selected=new Set();mediaCache.set(id,media);
+  const layer={id:S.nextId++,name:(kind==="video"?"Video ":"Image ")+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(layer);S.active=layer.id;S.selected=new Set([layer.id]);mediaCache.set(id,media);
   const st={kind,assetId:id,src,x:(S.docWidth-w)/2,y:(S.docHeight-h)/2,w,h,baseW:w,baseH:h,naturalW:nw,naturalH:nh,rotation:0,cropL:0,cropT:0,cropR:0,cropB:0,s:{color:"#000",size:1,opacity:1,pressure:0,smoothing:0,brush:"pen",anim:"static",intensity:0,speed:1,freq:1,loop:1,seamless:true},points:[]};layer.strokes.push(st);S.tool="move";["penBtn","eraseBtn","pickerBtn","selectBtn"].forEach(id=>$(id).classList.toggle("active",id==="selectBtn"));drawLayers();updateMediaPanel();render();autosave();hud.textContent=`${kind==="video"?"Video":"Image"} imported · drag to move, adjust placement controls`;return st;
  };
  try{
-  if(isJson){const d=JSON.parse(await f.text());S.layers=d.layers||[];S.active=d.active||S.layers[0]?.id;S.nextId=d.nextId||S.layers.length+1;S.colors=d.colors||[];if(d.docWidth&&d.docHeight){S.docWidth=d.docWidth;S.docHeight=d.docHeight;S.created=true;$("canvasSetup").hidden=true;resize()}S.selected=new Set();
+  if(isJson){const d=JSON.parse(await f.text());S.layers=d.layers||[];S.active=d.active||S.layers[0]?.id;S.nextId=d.nextId||S.layers.length+1;S.colors=d.colors||[];if(d.docWidth&&d.docHeight){S.docWidth=d.docWidth;S.docHeight=d.docHeight;S.created=true;$("canvasSetup").hidden=true;resize()}S.selected=new Set([S.active]);
    for(const layer of S.layers)for(const st of layer.strokes||[])if(st.assetId&&st.src&&!mediaCache.has(st.assetId)){if(st.kind==="video"){const v=document.createElement("video");v.src=st.src;v.muted=true;v.loop=true;v.playsInline=true;v.onloadedmetadata=()=>{mediaCache.set(st.assetId,v);v.play().catch(()=>{});render()}}else{const im=new Image();im.onload=()=>{mediaCache.set(st.assetId,im);render()};im.src=st.src}}
    drawLayers();drawPalette();render();autosave();
   }else if(isImage){const src=await readData(f);const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("This image format could not be decoded by this browser"));img.src=src});addMedia("image",img,src,img.naturalWidth,img.naturalHeight);

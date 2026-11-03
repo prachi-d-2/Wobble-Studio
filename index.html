@@ -6,7 +6,7 @@
 <style>
 :root{color-scheme:dark;--bg:#17191f;--panel:#22252d;--line:#393d48;--text:#f4f5f7;--muted:#aab0bd;--accent:#b8f36b}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,sans-serif;overscroll-behavior:none}body{display:flex;flex-direction:column;overflow:hidden}
-header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d2027;border-bottom:1px solid var(--line);flex-wrap:wrap}.brand{font-weight:800;margin-right:auto}.brand span{color:var(--accent)}button,.file-label,select,input[type=color],input[type=text]{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 9px;font:inherit}button{cursor:pointer}button.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}button:disabled{opacity:.4}main{display:flex;flex:1;min-height:0}#stage{position:relative;flex:1;min-width:0;min-height:0;background:#f8f7f2;overflow:hidden}canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;left:10px;bottom:10px;background:#17191fdc;color:#eee;padding:6px 8px;border-radius:7px;font-size:11px;pointer-events:none}aside{width:300px;max-width:42vw;background:#1d2027;border-left:1px solid var(--line);padding:11px;overflow:auto;display:flex;flex-direction:column;gap:13px}section{display:grid;gap:7px}h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0}.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.row label{flex:1;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{height:36px;width:45px;padding:2px}select{width:100%}.small{font-size:11px;color:var(--muted);line-height:1.4}.palette{display:flex;gap:5px;flex-wrap:wrap}.swatch{width:22px;height:22px;border-radius:50%;border:2px solid #ffffff55;padding:0}.layer{display:flex;align-items:center;gap:5px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}.layer.selected{border-color:var(--accent)}.layer input{width:100px;min-width:0;padding:5px}.layer .pick{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.layer button{padding:4px 6px}.layerList{display:grid;gap:5px}footer{padding:6px 10px;border-top:1px solid var(--line);background:#1d2027;color:var(--muted);font-size:11px}
+header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d2027;border-bottom:1px solid var(--line);flex-wrap:wrap}.brand{font-weight:800;margin-right:auto}.brand span{color:var(--accent)}button,.file-label,select,input[type=color],input[type=text]{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 9px;font:inherit}button{cursor:pointer}button.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}button:disabled{opacity:.4}body.options-hidden aside{display:none}body.options-hidden #stage{flex:1}#showOptions{display:none;position:fixed;right:12px;top:12px;z-index:20;box-shadow:0 4px 18px #0008}body.options-hidden #showOptions{display:block}main{display:flex;flex:1;min-height:0}#stage{position:relative;flex:1;min-width:0;min-height:0;background:#f8f7f2;overflow:hidden}canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;left:10px;bottom:10px;background:#17191fdc;color:#eee;padding:6px 8px;border-radius:7px;font-size:11px;pointer-events:none}aside{width:300px;max-width:42vw;background:#1d2027;border-left:1px solid var(--line);padding:11px;overflow:auto;display:flex;flex-direction:column;gap:13px}section{display:grid;gap:7px}h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0}.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.row label{flex:1;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{height:36px;width:45px;padding:2px}select{width:100%}.small{font-size:11px;color:var(--muted);line-height:1.4}.palette{display:flex;gap:5px;flex-wrap:wrap}.swatch{width:22px;height:22px;border-radius:50%;border:2px solid #ffffff55;padding:0}.layer{display:flex;align-items:center;gap:5px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}.layer.selected{border-color:var(--accent)}.layer input{width:100px;min-width:0;padding:5px}.layer .pick{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.layer button{padding:4px 6px}.layerList{display:grid;gap:5px}footer{padding:6px 10px;border-top:1px solid var(--line);background:#1d2027;color:var(--muted);font-size:11px}
 @media(max-width:720px){main{flex-direction:column}aside{width:100%;max-width:none;max-height:40vh;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}aside section:first-child,aside section:nth-child(3){grid-column:1/-1}header button{padding:6px 7px}#stage{min-height:42vh}}
 </style>
 </head>
@@ -15,19 +15,19 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
  <div class="brand">Wobble <span>Studio</span></div>
  <button id="penBtn" class="active">✎ Draw</button><button id="eraseBtn">⌫ Erase</button><button id="pickerBtn">⌕ Pick</button><button id="selectBtn">▧ Move</button>
  <button id="undoBtn">↶</button><button id="redoBtn">↷</button><button id="clearBtn">Clear</button><button id="animateBtn">Ⅱ Animate</button>
- <button id="saveBtn">Save</button><button id="pngBtn">PNG</button><button id="gifBtn">GIF</button><button id="mp4Btn">MP4</button><button id="projectBtn">Project</button>
+ <button id="saveBtn">Save</button><button id="pngBtn">PNG</button><button id="gifBtn">GIF</button><button id="mp4Btn">MP4</button><button id="projectBtn">Project</button><button id="hideOptionsBtn" title="Hide options for fullscreen drawing">Hide options</button><button id="fullscreenBtn" title="Toggle fullscreen">Fullscreen</button>
  <label class="file-label" for="importFile">Import</label><input id="importFile" type="file" accept="image/*,.json" hidden>
 </header>
-<main><div id="stage"><canvas id="canvas"></canvas><div id="hud">Ready · Apple Pencil preferred</div></div>
+<button id="showOptions">Show options</button><main><div id="stage"><canvas id="canvas"></canvas><div id="hud">Ready · Apple Pencil preferred</div></div>
 <aside>
-<section><h2>Brush studio</h2><label>Preset</label><select id="brush"><option value="pen">Pen</option><option value="pencil">Pencil / textured</option><option value="marker">Marker</option><option value="fade">Fade pen</option><option value="glow">Glow</option><option value="airbrush">Airbrush</option><option value="calligraphy">Calligraphy</option><option value="rainbow">Rainbow</option></select>
+<section><h2>Brush studio</h2><label>Preset</label><select id="brush"><option value="pen">Pen</option><option value="pencil">Pencil / textured</option><option value="marker">Marker</option><option value="fade">Fade pen</option><option value="glow">Glow</option><option value="airbrush">Airbrush</option><option value="calligraphy">Calligraphy</option><option value="rainbow">Rainbow</option><option value="ink">Inking / taper</option><option value="soft">Soft brush</option><option value="chalk">Chalk</option><option value="pixel">Pixel pen</option><option value="ribbon">Ribbon</option><option value="watercolor">Watercolor</option><option value="neon">Neon edge</option><option value="spray">Spray</option><option value="dotted">Dotted</option><option value="dry">Dry brush</option><option value="stippling">Stipple dots</option><option value="hatch">Cross-hatch</option><option value="sparkle">Sparkle trail</option><option value="flat">Flat / chisel</option><option value="glitter">Glitter pencil</option><option value="taper">Tapered line</option><option value="bloom">Bloom brush</option><option value="lace">Lace dots</option><option value="eraser-soft">Soft eraser</option><option value="oil">Oil paint daub</option><option value="thread">Thread / stitch</option><option value="star">Star stamp</option><option value="bubble">Bubble pen</option><option value="sumi">Sumi ink</option></select>
 <div class="row"><label>Color</label><input id="color" type="color" value="#292934"><button id="wheelBtn">Wheel</button></div><div id="wheelWrap" hidden><input id="wheel" type="color" value="#292934" style="width:100%;height:55px"></div><div class="palette" id="palette"></div>
 <div class="row"><label>Size <span id="sizeV">6</span></label></div><input id="size" type="range" min="1" max="70" value="6">
 <div class="row"><label>Opacity <span id="opacityV">100%</span></label></div><input id="opacity" type="range" min="5" max="100" value="100">
 <div class="row"><label>Pressure <span id="pressureV">100%</span></label></div><input id="pressure" type="range" min="0" max="100" value="100">
 <div class="row"><label>Smoothing <span id="smoothV">35%</span></label></div><input id="smooth" type="range" min="0" max="90" value="35">
 </section>
-<section><h2>Animation</h2><label>Style</label><select id="animStyle"><option value="boil">Boiling line</option><option value="jitter">Sketch jitter</option><option value="wave">Smooth wave</option><option value="pulse">Pulse</option><option value="dash">Moving dash</option><option value="orbit">Orbit / ripple</option><option value="static">Static</option></select>
+<section><h2>Animation</h2><label>Style</label><select id="animStyle"><option value="static" selected>Static (keep shape)</option><option value="boil">Boiling line</option><option value="jitter">Sketch jitter</option><option value="wave">Smooth wave</option><option value="pulse">Pulse</option><option value="dash">Moving dash</option><option value="orbit">Orbit / ripple</option><option value="float">Float / drift</option><option value="twist">Twist</option><option value="flicker">Flicker</option><option value="morph">Organic morph</option><option value="bounce">Bounce</option><option value="shimmer">Shimmer</option><option value="spiral">Spiral</option><option value="jelly">Jelly wobble</option><option value="tremor">Tiny tremor</option><option value="ripple">Traveling ripple</option><option value="sway">Sway</option><option value="stretch">Elastic stretch</option><option value="comet">Comet trail</option><option value="heartbeat">Heartbeat</option><option value="zigzag">Zigzag</option><option value="breathe">Breathing</option><option value="vortex">Vortex</option><option value="wave2">Double wave</option></select>
 <div class="row"><label>Intensity <span id="intensityV">2.5</span></label></div><input id="intensity" type="range" min="0" max="14" step=".1" value="2.5">
 <div class="row"><label>Speed <span id="speedV">1.2×</span></label></div><input id="speed" type="range" min=".2" max="4" step=".1" value="1.2">
 <div class="row"><label>Frequency <span id="freqV">2.5</span></label></div><input id="freq" type="range" min=".3" max="12" step=".1" value="2.5">
@@ -37,7 +37,7 @@ header{display:flex;align-items:center;gap:6px;padding:9px 10px;background:#1d20
 <div class="row"><label>Opacity <span id="layerOpacityV">100%</span></label></div><input id="layerOpacity" type="range" min="0" max="100" value="100">
 <label>Blend mode</label><select id="blend"><option value="source-over">Normal</option><option value="multiply">Multiply</option><option value="screen">Screen</option><option value="overlay">Overlay</option><option value="darken">Darken</option><option value="lighten">Lighten</option><option value="color-dodge">Color dodge</option><option value="color-burn">Color burn</option><option value="hard-light">Hard light</option><option value="soft-light">Soft light</option><option value="difference">Difference</option><option value="exclusion">Exclusion</option><option value="lighter">Add</option></select>
 <div class="small">Rename a layer by double-clicking its name. Select several layers with the checkbox to group. Drag layer rows to reorder.</div></section>
-<section><h2>Canvas tools</h2><label class="row"><input id="pencilOnly" type="checkbox" checked> Pencil-only drawing</label><label class="row"><input id="palmGuard" type="checkbox" checked> Palm/touch guard</label><label class="row"><input id="grid" type="checkbox"> Show grid</label><label class="row"><input id="symmetry" type="checkbox"> Mirror symmetry</label><label>Symmetry axis</label><select id="symAxis"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option><option value="both">Both axes</option></select>
+<section><h2>Canvas tools</h2><label class="row"><input id="pencilOnly" type="checkbox"> Pencil-only drawing</label><label class="row"><input id="palmGuard" type="checkbox" checked> Palm/touch guard</label><label class="row"><input id="grid" type="checkbox"> Show grid</label><label class="row"><input id="symmetry" type="checkbox"> Mirror symmetry</label><label>Symmetry axis</label><select id="symAxis"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option><option value="both">Both axes</option></select>
 <button id="fitBtn">Fit / reset view</button><div class="small">Browser-level touch filtering is best-effort; iPadOS provides the system's native palm rejection.</div></section>
 </aside></main><footer>Personal project · autosaves in this browser · export project JSON for backups · MP4/GIF availability depends on browser codecs</footer>
 <script>
@@ -57,40 +57,249 @@ function autosave(){try{localStorage.setItem("wobbleStudioAuto",snap())}catch(e)
 function smoothPoints(a,amt){if(a.length<3||!amt)return a;let o=[a[0]];for(let i=1;i<a.length;i++){let p=a[i],q=o[o.length-1];o.push({...p,x:q.x+(p.x-q.x)*(1-amt*.45),y:q.y+(p.y-q.y)*(1-amt*.45)})}return o}
 function noise(n){let x=Math.sin(n*127.1+311.7)*43758.5453;return (x-Math.floor(x))*2-1}
 function nSmooth(x){let i=Math.floor(x),f=x-i,u=f*f*(3-2*f);return noise(i)*(1-u)+noise(i+1)*u}
-function animPoints(st,t){let p=st.points,s=st.s;if(!p.length||s.anim==="static"||s.intensity===0)return p;let dur=Math.max(.2,s.loop),phase=((t*s.speed)%dur)/dur*Math.PI*2,period=s.seamless?phase: t*s.speed;return p.map((q,i)=>{let u=p.length<2?0:i/(p.length-1),w=s.freq*6.283*u;let dx=0,dy=0,a=s.intensity;if(s.anim==="wave"){dx=Math.sin(w+phase)*a;dy=Math.cos(w*.7+phase)*a*.55}else if(s.anim==="jitter"){dx=nSmooth(u*16+period*4)*a;dy=nSmooth(u*19+period*4+4)*a}else if(s.anim==="pulse"){let z=1+Math.sin(phase)*a*.035;dx=(q.x-p[0].x)*(z-1);dy=(q.y-p[0].y)*(z-1)}else if(s.anim==="dash"){dx=Math.sin(w-phase)*a*.3;dy=Math.cos(w-phase)*a*.3}else if(s.anim==="orbit"){dx=Math.sin(w+phase)*a*.7;dy=Math.cos(w+phase)*a*.7}else{dx=(nSmooth(u*12+phase)*.7+Math.sin(w+phase)*.3)*a;dy=(nSmooth(u*15+phase+8)*.7+Math.cos(w+phase)*.3)*a}return {...q,x:q.x+dx,y:q.y+dy}})}
-function path(points,c){if(!points.length)return;c.beginPath();c.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length-1;i++){let p=points[i],n=points[i+1];c.quadraticCurveTo(p.x,p.y,(p.x+n.x)/2,(p.y+n.y)/2)}if(points.length>1)c.lineTo(points.at(-1).x,points.at(-1).y)}
+function animPoints(st,t){let p=st.points,s=st.s;if(!p.length||s.anim==="static"||s.intensity===0)return p;let dur=Math.max(.2,s.loop),phase=((t*s.speed)%dur)/dur*Math.PI*2,period=s.seamless?phase: t*s.speed;return p.map((q,i)=>{let u=p.length<2?0:i/(p.length-1),w=s.freq*6.283*u;let dx=0,dy=0,a=s.intensity;if(s.anim==="wave"){dx=Math.sin(w+phase)*a;dy=Math.cos(w*.7+phase)*a*.55}else if(s.anim==="jitter"){dx=nSmooth(u*16+period*4)*a;dy=nSmooth(u*19+period*4+4)*a}else if(s.anim==="pulse"){let z=1+Math.sin(phase)*a*.035;dx=(q.x-p[0].x)*(z-1);dy=(q.y-p[0].y)*(z-1)}else if(s.anim==="dash"){dx=Math.sin(w-phase)*a*.3;dy=Math.cos(w-phase)*a*.3}else if(s.anim==="orbit"){dx=Math.sin(w+phase)*a*.7;dy=Math.cos(w+phase)*a*.7 }else if(s.anim==="float"){dx=Math.sin(phase*.7+u*3)*a;dy=Math.cos(phase*.8+u*2)*a*.65
+}else if(s.anim==="twist"){let ang=Math.sin(phase+u*3)*a*.012,ox=q.x-p[0].x,oy=q.y-p[0].y;dx=ox*Math.cos(ang)-oy*Math.sin(ang)-ox;dy=ox*Math.sin(ang)+oy*Math.cos(ang)-oy
+}else if(s.anim==="flicker"){dx=nSmooth(u*24+phase*3)*a*.65;dy=nSmooth(u*21+phase*3+3)*a*.65
+}else if(s.anim==="morph"){dx=nSmooth(u*10+phase)*a;dy=nSmooth(u*12+phase+8)*a
+}else if(s.anim==="bounce"){dy=Math.abs(Math.sin(phase+u*4))*a;dx=Math.sin(phase+u*4)*a*.35
+}else if(s.anim==="shimmer"){dx=Math.sin(w*2+phase)*a*.22;dy=Math.cos(w*2+phase)*a*.22
+}else if(s.anim==="spiral"){let ang=phase+u*5,rad=a*(.25+u*.75);dx=Math.cos(ang)*rad;dy=Math.sin(ang)*rad
+}else if(s.anim==="jelly"){dx=Math.sin(phase+u*9)*a*(.35+u*.65);dy=Math.cos(phase*1.2+u*7)*a*.8
+}else if(s.anim==="tremor"){dx=nSmooth(u*48+phase*9)*a*.28;dy=nSmooth(u*53+phase*9+2)*a*.28
+}else if(s.anim==="ripple"){let z=Math.sin(phase-u*12);dx=Math.cos(w+phase)*z*a*.7;dy=Math.sin(w+phase)*z*a*.7
+}else if(s.anim==="sway"){dx=Math.sin(phase+u*2)*a;dy=Math.sin(phase*.65+u*4)*a*.25
+}else if(s.anim==="stretch"){let z=1+Math.sin(phase+u*5)*a*.012;dx=(q.x-p[0].x)*(z-1);dy=(q.y-p[0].y)*(z-1)
+}else if(s.anim==="comet"){dx=Math.sin(phase-u*5)*a*(1-u);dy=Math.cos(phase-u*5)*a*(1-u)
+}else if(s.anim==="heartbeat"){let z=1+Math.pow(Math.max(0,Math.sin(phase*2)),5)*a*.025;dx=(q.x-p[0].x)*(z-1);dy=(q.y-p[0].y)*(z-1)
+}else if(s.anim==="zigzag"){dx=Math.sin((u*8+phase)*Math.PI)*a*.65;dy=Math.cos((u*8+phase)*Math.PI)*a*.35
+}else if(s.anim==="breathe"){let z=1+Math.sin(phase)*a*.02;dx=(q.x-p[0].x)*(z-1);dy=(q.y-p[0].y)*(z-1)
+}else if(s.anim==="vortex"){let ang=phase+u*9,rad=a*(.15+u*.85);dx=Math.cos(ang)*rad;dy=Math.sin(ang)*rad
+}else if(s.anim==="wave2"){dx=(Math.sin(w+phase)+Math.sin(w*2-phase)*.45)*a*.65;dy=(Math.cos(w*.8+phase)+Math.cos(w*1.7-phase)*.35)*a*.55
+}else{dx=(nSmooth(u*12+phase)*.7+Math.sin(w+phase)*.3)*a;dy=(nSmooth(u*15+phase+8)*.7+Math.cos(w+phase)*.3)*a}return {...q,x:q.x+dx,y:q.y+dy}})}
+function path(points,c=ctx){if(!points.length)return;c.beginPath();c.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length-1;i++){let p=points[i],n=points[i+1];c.quadraticCurveTo(p.x,p.y,(p.x+n.x)/2,(p.y+n.y)/2)}if(points.length>1)c.lineTo(points.at(-1).x,points.at(-1).y)}
 function drawOne(st,t,mirror=0){let pts=animPoints(st,t);if(!pts.length)return;ctx.save();if(mirror===1){ctx.translate(canvas.clientWidth,0);ctx.scale(-1,1)}if(mirror===2){ctx.translate(0,canvas.clientHeight);ctx.scale(1,-1)}if(mirror===3){ctx.translate(canvas.clientWidth,canvas.clientHeight);ctx.scale(-1,-1)}
-let s=st.s;ctx.globalAlpha=s.opacity;ctx.globalCompositeOperation=st.tool==="eraser"?"destination-out":"source-over";ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle=s.color;ctx.fillStyle=s.color;
+let s=st.s;
+ctx.globalAlpha*=s.opacity;
+ctx.globalCompositeOperation=st.tool==="eraser"?"destination-out":"source-over";
+ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle=s.color;ctx.fillStyle=s.color;
+if(s.anim==="dash"){ctx.setLineDash([Math.max(3,s.size*2.8),Math.max(2,s.size*1.15)]);ctx.lineDashOffset=-(t*s.speed*24)}
+if(s.anim==="flicker"){ctx.globalAlpha*=.42+.58*(.5+.5*Math.sin(t*s.speed*18))}
+if(s.anim==="shimmer"){
+  const hue=(t*s.speed*95)%360;
+  ctx.strokeStyle=`hsl(${hue} 95% 68%)`;ctx.fillStyle=`hsl(${hue} 95% 68%)`;
+  ctx.shadowColor=ctx.strokeStyle;ctx.shadowBlur=Math.max(2,s.size*.65);
+}
+if(s.anim==="comet"){ctx.shadowColor=s.color;ctx.shadowBlur=Math.max(2,s.size*1.1)}
+if(s.anim==="heartbeat"){ctx.shadowColor=s.color;ctx.shadowBlur=Math.max(1,s.size*.25)*(0.5+Math.abs(Math.sin(t*s.speed*2))*2)}
+
 let last=pts[0];if(pts.length===1){ctx.beginPath();ctx.arc(last.x,last.y,s.size*(last.pressure||.5)/2,0,Math.PI*2);ctx.fill();ctx.restore();return}
 if(s.brush==="glow"){ctx.shadowColor=s.color;ctx.shadowBlur=s.size*2.2;ctx.lineWidth=s.size*1.4;path(pts);ctx.stroke();ctx.shadowBlur=s.size*.6;ctx.lineWidth=s.size*.7;path(pts);ctx.stroke()}
 else if(s.brush==="airbrush"){ctx.globalAlpha*=.18;ctx.shadowColor=s.color;ctx.shadowBlur=s.size*2.8;ctx.lineWidth=s.size*2.2;path(pts);ctx.stroke()}
 else if(s.brush==="marker"){ctx.globalAlpha*=.55;ctx.lineWidth=s.size*1.8;path(pts);ctx.stroke()}
-else if(s.brush==="fade"){ctx.lineWidth=s.size;for(let i=1;i<pts.length;i++){ctx.globalAlpha=s.opacity*(i/pts.length);ctx.lineWidth=s.size*(.25+.75*i/pts.length);ctx.beginPath();ctx.moveTo(pts[i-1].x,pts[i-1].y);ctx.lineTo(pts[i].x,pts[i].y);ctx.stroke()}}
+else if(s.brush==="fade"){ctx.lineWidth=s.size;for(let i=1;i<pts.length;i++){ctx.globalAlpha*=s.opacity*(i/pts.length);ctx.lineWidth=s.size*(.25+.75*i/pts.length);ctx.beginPath();ctx.moveTo(pts[i-1].x,pts[i-1].y);ctx.lineTo(pts[i].x,pts[i].y);ctx.stroke()}}
 else if(s.brush==="pencil"){ctx.globalAlpha*=.82;ctx.lineWidth=s.size*.8;path(pts);ctx.stroke();ctx.globalAlpha*=.2;ctx.lineWidth=s.size*1.5;path(pts);ctx.stroke()}
-else if(s.brush==="calligraphy"){ctx.lineWidth=s.size*(.4+.6*Math.abs(Math.sin(Math.PI/4)));path(pts);ctx.stroke()}
+else if(s.brush==="calligraphy"){
+  // Chisel-nib stroke: varying width follows segment direction, rather than a plain round line.
+  for(let i=1;i<pts.length;i++){
+    const a=pts[i-1],b=pts[i],angle=Math.atan2(b.y-a.y,b.x-a.x);
+    ctx.lineWidth=s.size*(.22+.78*Math.abs(Math.sin(angle+Math.PI/4)));
+    ctx.lineCap="butt";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  }
+}
 else if(s.brush==="rainbow"){for(let i=1;i<pts.length;i++){ctx.strokeStyle=`hsl(${(i*5)%360} 90% 58%)`;ctx.lineWidth=s.size;ctx.beginPath();ctx.moveTo(pts[i-1].x,pts[i-1].y);ctx.lineTo(pts[i].x,pts[i].y);ctx.stroke()}}
+else if(s.brush==="ink"){ctx.lineWidth=s.size;for(let i=1;i<pts.length;i++){let pr=pts[i].pressure||.5;ctx.lineWidth=s.size*(.25+pr*1.45);ctx.beginPath();ctx.moveTo(pts[i-1].x,pts[i-1].y);ctx.lineTo(pts[i].x,pts[i].y);ctx.stroke()}}
+else if(s.brush==="soft"){ctx.globalAlpha*=.5;ctx.shadowColor=s.color;ctx.shadowBlur=s.size*.9;ctx.lineWidth=s.size*1.6;path(pts);ctx.stroke()}
+else if(s.brush==="chalk"){ctx.globalAlpha*=.72;ctx.lineWidth=s.size*.9;path(pts);ctx.stroke();ctx.globalAlpha*=.3;ctx.lineWidth=s.size*1.7;ctx.setLineDash([1,Math.max(2,s.size*.45)]);path(pts);ctx.stroke();ctx.setLineDash([])}
+else if(s.brush==="pixel"){ctx.lineCap="butt";ctx.lineJoin="miter";ctx.lineWidth=Math.max(2,Math.round(s.size/4)*4);path(pts);ctx.stroke()}
+else if(s.brush==="ribbon"){
+  for(let i=1;i<pts.length;i++){
+    const u=i/(pts.length-1),a=pts[i-1],b=pts[i];
+    ctx.lineWidth=s.size*(.25+.75*Math.abs(Math.sin(u*Math.PI*4)));
+    ctx.lineCap="butt";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  }
+}
+else if(s.brush==="watercolor"){ctx.globalAlpha*=.22;ctx.lineWidth=s.size*2.2;ctx.shadowColor=s.color;ctx.shadowBlur=s.size*.5;path(pts);ctx.stroke();ctx.globalAlpha*=1.7;ctx.lineWidth=s.size*.8;path(pts);ctx.stroke()}
+else if(s.brush==="neon"){ctx.shadowColor=s.color;ctx.shadowBlur=s.size*2;ctx.globalAlpha*=.8;ctx.lineWidth=s.size*1.5;path(pts);ctx.stroke();ctx.shadowBlur=0;ctx.globalAlpha*=.9;ctx.lineWidth=Math.max(1,s.size*.35);path(pts);ctx.stroke()}
+else if(s.brush==="spray"){for(let i=0;i<pts.length;i+=Math.max(1,Math.floor(5/s.size))){let q=pts[i];for(let k=0;k<18;k++){let ang=k*2.39996,rad=(noise(i*23+k*7)+1)*s.size*.75;ctx.globalAlpha*=s.opacity*.25;ctx.beginPath();ctx.arc(q.x+Math.cos(ang)*rad,q.y+Math.sin(ang)*rad,Math.max(.4,s.size*.035),0,Math.PI*2);ctx.fill()}}}
+else if(s.brush==="dotted"){ctx.lineWidth=s.size;ctx.setLineDash([Math.max(1,s.size*.2),Math.max(2,s.size*1.25)]);path(pts);ctx.stroke();ctx.setLineDash([])}
+else if(s.brush==="dry"){ctx.globalAlpha*=.68;ctx.lineWidth=s.size*1.25;path(pts);ctx.stroke();ctx.globalAlpha*=.35;ctx.setLineDash([Math.max(1,s.size*.12),Math.max(2,s.size*.55)]);ctx.lineWidth=s.size*1.8;path(pts);ctx.stroke();ctx.setLineDash([])}
+else if(s.brush==="stippling"){for(let i=0;i<pts.length;i+=Math.max(1,Math.floor(4/Math.max(.5,s.size/8)))){let q=pts[i];for(let k=0;k<9;k++){let ang=k*2.39996,rad=(Math.abs(noise(i*17+k*5)))*s.size*.8;ctx.globalAlpha*=s.opacity*.5;ctx.beginPath();ctx.arc(q.x+Math.cos(ang)*rad,q.y+Math.sin(ang)*rad,Math.max(.5,s.size*.07),0,Math.PI*2);ctx.fill()}}}
+else if(s.brush==="hatch"){ctx.globalAlpha*=.6;ctx.lineWidth=Math.max(1,s.size*.18);path(pts);ctx.stroke();for(let i=1;i<pts.length;i++){let q=pts[i];ctx.beginPath();ctx.moveTo(q.x-s.size*.5,q.y-s.size*.5);ctx.lineTo(q.x+s.size*.5,q.y+s.size*.5);ctx.stroke()}}
+else if(s.brush==="sparkle"){for(let i=0;i<pts.length;i+=Math.max(2,Math.floor(8/Math.max(.5,s.size/10)))){let q=pts[i],r=Math.max(1,s.size*.24);ctx.globalAlpha*=s.opacity*.85;ctx.beginPath();ctx.moveTo(q.x-r*2,q.y);ctx.lineTo(q.x+r*2,q.y);ctx.moveTo(q.x,q.y-r*2);ctx.lineTo(q.x,q.y+r*2);ctx.stroke();ctx.beginPath();ctx.arc(q.x,q.y,r*.6,0,Math.PI*2);ctx.fill()}}
+else if(s.brush==="flat"){ctx.lineCap="square";ctx.lineWidth=s.size*1.35;path(pts);ctx.stroke()}
+else if(s.brush==="glitter"){ctx.globalAlpha*=.62;ctx.lineWidth=s.size;path(pts);ctx.stroke();for(let i=0;i<pts.length;i+=Math.max(1,Math.floor(3/Math.max(.5,s.size/9)))){let q=pts[i];ctx.globalAlpha*=s.opacity*.6;ctx.fillRect(q.x-s.size*.08,q.y-s.size*.08,Math.max(1,s.size*.16),Math.max(1,s.size*.16))}}
+else if(s.brush==="taper"){for(let i=1;i<pts.length;i++){let u=i/(pts.length-1);ctx.lineWidth=s.size*Math.sin(Math.PI*u)*.95+s.size*.08;ctx.beginPath();ctx.moveTo(pts[i-1].x,pts[i-1].y);ctx.lineTo(pts[i].x,pts[i].y);ctx.stroke()}}
+else if(s.brush==="bloom"){ctx.globalAlpha*=.22;ctx.shadowColor=s.color;ctx.shadowBlur=s.size*1.8;ctx.lineWidth=s.size*2.5;path(pts);ctx.stroke();ctx.shadowBlur=0;ctx.globalAlpha*=1.9;ctx.lineWidth=s.size*.7;path(pts);ctx.stroke()}
+else if(s.brush==="lace"){for(let i=0;i<pts.length;i+=Math.max(1,Math.floor(2/Math.max(.5,s.size/10)))){let q=pts[i];ctx.globalAlpha*=s.opacity*.75;ctx.beginPath();ctx.arc(q.x,q.y,Math.max(1,s.size*.32),0,Math.PI*2);ctx.stroke()}}
+else if(s.brush==="eraser-soft"){ctx.globalCompositeOperation="destination-out";ctx.globalAlpha*=.35;ctx.shadowColor="#000";ctx.shadowBlur=s.size*.75;ctx.lineWidth=s.size*2;path(pts);ctx.stroke()}
+else if(s.brush==="oil"){ctx.lineCap="round";for(let i=1;i<pts.length;i++){let a=pts[i-1],b=pts[i];ctx.globalAlpha*=.75;ctx.lineWidth=s.size*(.8+Math.abs(Math.sin(i*1.7))*.8);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.globalAlpha=1}}
+else if(s.brush==="thread"){ctx.lineWidth=Math.max(1,s.size*.55);ctx.setLineDash([s.size*.85,s.size*.6]);path(pts);ctx.stroke();ctx.setLineDash([])}
+else if(s.brush==="star"){for(let i=0;i<pts.length;i+=Math.max(1,Math.floor(8/Math.max(.5,s.size/8)))){let q=pts[i],r=s.size*.55;ctx.beginPath();for(let k=0;k<10;k++){let a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.35:r;let x=q.x+Math.cos(a)*rr,y=q.y+Math.sin(a)*rr;k?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.closePath();ctx.fill()}}
+else if(s.brush==="bubble"){for(let i=0;i<pts.length;i+=Math.max(1,Math.floor(4/Math.max(.5,s.size/8)))){let q=pts[i],r=s.size*.35;ctx.beginPath();ctx.arc(q.x,q.y,r,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.arc(q.x-r*.28,q.y-r*.28,Math.max(.5,r*.15),0,Math.PI*2);ctx.fill()}}
+else if(s.brush==="sumi"){ctx.globalAlpha*=.7;ctx.lineCap="round";for(let i=1;i<pts.length;i++){let a=pts[i-1],b=pts[i],p=b.pressure||.5;ctx.lineWidth=s.size*(.3+p*1.5);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}ctx.globalAlpha*=.35;ctx.shadowColor=s.color;ctx.shadowBlur=s.size*.25;ctx.lineWidth=s.size*.6;path(pts);ctx.stroke()}
 else{ctx.lineWidth=s.size;path(pts);ctx.stroke()}
-ctx.restore()}
-function render(t=performance.now()/1000){let r=stage.getBoundingClientRect(),d=canvas.width/r.width;ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,r.width,r.height);if($("grid").checked){ctx.save();ctx.strokeStyle="#9aa0aa44";ctx.lineWidth=1;for(let x=0;x<r.width;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,r.height);ctx.stroke()}for(let y=0;y<r.height;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(r.width,y);ctx.stroke()}ctx.restore()}
-for(const l of S.layers){if(!l.visible)continue;ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";for(const st of l.strokes){drawOne(st,t);if($("symmetry").checked){let ax=$("symAxis").value;if(ax==="vertical"||ax==="both")drawOne(st,t,1);if(ax==="horizontal"||ax==="both")drawOne(st,t,2);if(ax==="both")drawOne(st,t,3)}}ctx.restore()}
-if(S.current)drawOne(S.current,t);if(S.playing)requestAnimationFrame(x=>render(x/1000))}
+ctx.setLineDash([]);ctx.restore()}
+function drawStrokeSet(st,t){
+  // The symmetry mode is captured when a stroke begins, so it remains consistent after release.
+  const mode=st.symmetryMode||"none";
+  drawOne(st,t,0);
+  if(mode==="vertical"||mode==="both")drawOne(st,t,1);
+  if(mode==="horizontal"||mode==="both")drawOne(st,t,2);
+  if(mode==="both")drawOne(st,t,3);
+}
+function render(t=performance.now()/1000){
+  const r=stage.getBoundingClientRect(),d=canvas.width/Math.max(1,r.width);
+  ctx.setTransform(d,0,0,d,0,0);
+  ctx.globalAlpha=1;ctx.globalCompositeOperation="source-over";
+  ctx.fillStyle="#f8f7f2";ctx.fillRect(0,0,r.width,r.height);
+  if($("grid").checked){ctx.save();ctx.strokeStyle="#9aa0aa44";ctx.lineWidth=1;for(let x=0;x<r.width;x+=25){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,r.height);ctx.stroke()}for(let y=0;y<r.height;y+=25){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(r.width,y);ctx.stroke()}ctx.restore()}
+  for(const l of S.layers){
+    if(!l.visible)continue;
+    ctx.save();ctx.globalAlpha=l.opacity;ctx.globalCompositeOperation=l.blend||"source-over";
+    for(const st of l.strokes)drawStrokeSet(st,t);
+    ctx.restore();
+  }
+  if(S.current)drawStrokeSet(S.current,t);
+  if(S.playing)requestAnimationFrame(x=>render(x/1000));
+}
 function pos(e){let r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top,pressure:e.pointerType==="pen"?(e.pressure||.5):.5,time:performance.now()}}
-function allow(e){if(e.pointerType==="pen"){S.pencilActive=true;return true}if(e.pointerType==="touch"){if($("pencilOnly").checked)return false;if($("palmGuard").checked&&S.pencilActive)return false}return true}
-canvas.addEventListener("pointerdown",e=>{e.preventDefault();if(!allow(e))return;canvas.setPointerCapture(e.pointerId);S.activePointers.add(e.pointerId);let p=pos(e);if(S.tool==="picker"){const col=sampleColor(p.x,p.y);if(col){setColor(col);rememberColor(col)}S.activePointers.delete(e.pointerId);return}if(S.tool==="move"){S.moveStart={p,layer:getLayer(),start:snap()};return}checkpoint();let s=settings();S.current={tool:S.tool==="erase"?"eraser":"pen",s,points:[p]};hud.textContent=`${S.tool==="erase"?"Erasing":"Drawing"} · ${e.pointerType}`;render()});
-canvas.addEventListener("pointermove",e=>{if(!S.activePointers.has(e.pointerId)||!S.current)return;e.preventDefault();let events=e.getCoalescedEvents?e.getCoalescedEvents():[e];for(let ev of events){let p=pos(ev),a=S.current.points,last=a.at(-1);if(Math.hypot(p.x-last.x,p.y-last.y)>.25)a.push(p)}render()});
-function end(e){S.activePointers.delete(e.pointerId);if(e.pointerType==="pen"&&!S.activePointers.size)S.pencilActive=false;if(S.moveStart){S.moveStart=null;autosave();return}if(S.current){S.current.points=smoothPoints(S.current.points,S.current.s.smoothing);getLayer().strokes.push(S.current);S.current=null;drawLayers();autosave();render()}hud.textContent="Ready"}
-canvas.addEventListener("pointerup",end);canvas.addEventListener("pointercancel",end);canvas.addEventListener("lostpointercapture",end);
+function allow(e){
+  // Mouse always draws. Pen is preferred but touch is allowed unless Pencil-only is enabled.
+  if(e.pointerType==="mouse")return true;
+  if(e.pointerType==="pen"){S.pencilActive=true;return true;}
+  if(e.pointerType==="touch"){
+    if($("pencilOnly").checked)return false;
+    if($("palmGuard").checked&&S.pencilActive)return false;
+    return true;
+  }
+  return true;
+}
+function startStroke(e){
+  if(e.button!==undefined&&e.button!==0)return;
+  if(!allow(e))return;
+  if(e.cancelable)e.preventDefault();
+  try{if(canvas.setPointerCapture&&e.pointerId!==undefined)canvas.setPointerCapture(e.pointerId)}catch(_){}
+  const pid=e.pointerId??"mouse";
+  S.activePointers.add(pid);
+  const p=pos(e);
+  if(S.tool==="picker"){
+    const col=sampleColor(p.x,p.y);
+    if(col){setColor(col);rememberColor(col)}
+    S.activePointers.delete(pid);return;
+  }
+  if(S.tool==="move"){S.moveStart={p,layer:getLayer(),start:snap()};return}
+  if(S.current)return; // Ignore a second simultaneous contact while one stroke is active.
+  checkpoint();
+  const s=settings();
+  S.current={tool:S.tool==="erase"?"eraser":"pen",s,points:[p],
+    symmetryMode:$("symmetry").checked?$("symAxis").value:"none"};
+  hud.textContent=`${S.tool==="erase"?"Erasing":"Drawing"} · ${e.pointerType||"mouse"}`;
+  render();
+}
+function moveStroke(e){
+  const pid=e.pointerId??"mouse";
+  if(!S.activePointers.has(pid)||!S.current)return;
+  if(e.cancelable)e.preventDefault();
+  const events=(typeof e.getCoalescedEvents==="function" ? e.getCoalescedEvents() : null);
+  for(const ev of (events&&events.length?events:[e])){
+    const p=pos(ev),a=S.current.points,last=a[a.length-1];
+    if(Math.hypot(p.x-last.x,p.y-last.y)>.15)a.push(p);
+  }
+  render();
+}
+function finishCurrentStroke(){
+  if(!S.current)return false;
+  const live=S.current;
+  const completed={
+    tool:live.tool,
+    s:{...live.s},
+    points:live.points.map(p=>({...p})),
+    symmetryMode:live.symmetryMode||"none"
+  };
+  completed.points=smoothPoints(completed.points,completed.s.smoothing);
+  const layer=getLayer();
+  if(!layer){S.current=null;render();return false;}
+  // Add to model before clearing preview: release never removes the visible stroke.
+  layer.strokes.push(completed);
+  S.current=null;
+  drawLayers();
+  autosave();
+  // Draw the committed layer immediately, then once on the next frame to avoid a stale preview frame.
+  render(performance.now()/1000);
+  requestAnimationFrame(()=>render(performance.now()/1000));
+  hud.textContent=`Stroke kept on canvas · ${layer.strokes.length} on ${layer.name}`;
+  return true;
+}
+function endStroke(e){
+  const pid=e.pointerId??"mouse";
+  const wasActive=S.activePointers.has(pid);
+  S.activePointers.delete(pid);
+  if(e.pointerType==="pen"&&S.activePointers.size===0)S.pencilActive=false;
+  if(S.moveStart){S.moveStart=null;autosave();return}
+  // A release can contain the last coordinate even if the browser omitted a final pointermove.
+  // Add it before commit, but only for the active pointer and only if it moved.
+  if(wasActive&&S.current&&Number.isFinite(e.clientX)&&Number.isFinite(e.clientY)){
+    const p=pos(e),last=S.current.points[S.current.points.length-1];
+    if(!last||Math.hypot(p.x-last.x,p.y-last.y)>.15)S.current.points.push(p);
+  }
+  // pointerup, pointercancel, and lostpointercapture may all arrive; first one wins.
+  finishCurrentStroke();
+}
+canvas.style.touchAction="none";
+canvas.addEventListener("pointerdown",startStroke,{passive:false});
+canvas.addEventListener("pointermove",moveStroke,{passive:false});
+canvas.addEventListener("pointerup",endStroke);
+canvas.addEventListener("pointercancel",endStroke);
+canvas.addEventListener("lostpointercapture",endStroke);
+// Compatibility fallback for older browsers without Pointer Events.
+if(!("PointerEvent" in window)){
+  let mouseDown=false;
+  canvas.addEventListener("mousedown",e=>{mouseDown=true;startStroke({...e,pointerId:"mouse",pointerType:"mouse"})});
+  window.addEventListener("mousemove",e=>{if(mouseDown)moveStroke({...e,pointerId:"mouse",pointerType:"mouse"})});
+  window.addEventListener("mouseup",e=>{if(mouseDown){mouseDown=false;endStroke({...e,pointerId:"mouse",pointerType:"mouse"})}});
+  canvas.addEventListener("touchstart",e=>{for(const t of e.changedTouches)startStroke({pointerId:t.identifier,pointerType:"touch",clientX:t.clientX,clientY:t.clientY,button:0,cancelable:true,preventDefault:()=>e.preventDefault()})},{passive:false});
+  canvas.addEventListener("touchmove",e=>{for(const t of e.changedTouches)moveStroke({pointerId:t.identifier,pointerType:"touch",clientX:t.clientX,clientY:t.clientY,cancelable:true,preventDefault:()=>e.preventDefault()})},{passive:false});
+  canvas.addEventListener("touchend",e=>{for(const t of e.changedTouches)endStroke({pointerId:t.identifier,pointerType:"touch"})});
+}
 function setTool(t){S.tool=t;["penBtn","eraseBtn","pickerBtn","selectBtn"].forEach(id=>$(id).classList.toggle("active",id===({pen:"penBtn",erase:"eraseBtn",picker:"pickerBtn",move:"selectBtn"}[t])))}
 $("penBtn").onclick=()=>setTool("pen");$("eraseBtn").onclick=()=>setTool("erase");$("pickerBtn").onclick=()=>setTool("picker");$("selectBtn").onclick=()=>setTool("move");$("undoBtn").onclick=undo;$("redoBtn").onclick=redo;
 $("clearBtn").onclick=()=>{checkpoint();getLayer().strokes=[];drawLayers();render();autosave()};
 $("animateBtn").onclick=()=>{S.playing=!S.playing;$("animateBtn").textContent=S.playing?"Ⅱ Animate":"▶ Animate";if(S.playing)render()};
-function drawLayers(){let root=$("layers");root.replaceChildren();[...S.layers].reverse().forEach(l=>{let row=document.createElement("div");row.className="layer";row.draggable=true;row.classList.toggle("selected",l.id===S.active);row.ondragstart=e=>e.dataTransfer.setData("text/plain",String(l.id));row.ondragover=e=>e.preventDefault();row.ondrop=e=>{e.preventDefault();let from=S.layers.findIndex(x=>x.id===+e.dataTransfer.getData("text/plain")),to=S.layers.findIndex(x=>x.id===l.id);if(from>=0&&to>=0){checkpoint();let a=S.layers.splice(from,1)[0];S.layers.splice(to,0,a);drawLayers();render();autosave()}};let vis=document.createElement("input");vis.type="checkbox";vis.checked=l.visible;vis.title="Visible";vis.onchange=()=>{checkpoint();l.visible=vis.checked;render();autosave()};let name=document.createElement("button");name.className="pick";name.textContent=l.name;name.ondblclick=()=>{let n=prompt("Layer name",l.name);if(n){checkpoint();l.name=n;drawLayers();autosave()}};name.onclick=()=>{S.active=l.id;S.selected=new Set([l.id]);$("layerOpacity").value=l.opacity*100;$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers()};let count=document.createElement("span");count.className="small";count.textContent=l.strokes.length+"";row.append(vis,name,count);root.append(row)})}
+function drawLayers(){
+ let root=$("layers");root.replaceChildren();
+ const ordered=[...S.layers].reverse();
+ ordered.forEach(l=>{
+  let row=document.createElement("div");row.className="layer";row.draggable=true;
+  row.classList.toggle("selected",l.id===S.active);
+  row.ondragstart=e=>e.dataTransfer.setData("text/plain",String(l.id));
+  row.ondragover=e=>e.preventDefault();
+  row.ondrop=e=>{e.preventDefault();let from=S.layers.findIndex(x=>x.id===+e.dataTransfer.getData("text/plain")),to=S.layers.findIndex(x=>x.id===l.id);if(from>=0&&to>=0&&from!==to){checkpoint();let a=S.layers.splice(from,1)[0];S.layers.splice(to,0,a);drawLayers();render();autosave()}};
+  let sel=document.createElement("input");sel.type="checkbox";sel.checked=S.selected.has(l.id);sel.title="Select for grouping";sel.onchange=()=>{if(sel.checked)S.selected.add(l.id);else S.selected.delete(l.id)};
+  let vis=document.createElement("input");vis.type="checkbox";vis.checked=l.visible;vis.title="Visible";vis.onchange=()=>{checkpoint();l.visible=vis.checked;render();autosave()};
+  let name=document.createElement("button");name.className="pick";name.textContent=(l.group?"↳ ":"")+l.name+(l.group?" · grouped":"");name.ondblclick=()=>{let n=prompt("Layer name",l.name);if(n){checkpoint();l.name=n;drawLayers();autosave()}};
+  name.onclick=()=>{S.active=l.id;$("layerOpacity").value=l.opacity*100;$("layerOpacityV").textContent=Math.round(l.opacity*100)+"%";$("blend").value=l.blend||"source-over";drawLayers()};
+  let count=document.createElement("span");count.className="small";count.textContent=l.strokes.length+"";
+  row.append(sel,vis,name,count);root.append(row)
+ });
+}
 $("addLayer").onclick=()=>{checkpoint();let l={id:S.nextId++,name:"Layer "+S.nextId,strokes:[],opacity:1,blend:"source-over",group:null,visible:true};S.layers.push(l);S.active=l.id;S.selected=new Set([l.id]);drawLayers();render();autosave()};
 $("layerOpacity").oninput=e=>{getLayer().opacity=+e.target.value/100;$("layerOpacityV").textContent=e.target.value+"%";render();autosave()};
 $("blend").onchange=e=>{checkpoint();getLayer().blend=e.target.value;render();autosave()};
-$("groupBtn").onclick=()=>{if(S.selected.size<2){alert("Select multiple layers using the layer checkboxes first.");return}checkpoint();let gid="g"+Date.now();S.layers.forEach(l=>{if(S.selected.has(l.id))l.group=gid});drawLayers();autosave();hud.textContent="Selected layers grouped (logical group)"};
-$("ungroupBtn").onclick=()=>{checkpoint();let groups=new Set([...S.selected].map(id=>S.layers.find(l=>l.id===id)?.group).filter(Boolean));S.layers.forEach(l=>{if(groups.has(l.group))l.group=null});drawLayers();autosave()};
-$("layers").addEventListener("change",e=>{if(e.target.type==="checkbox"){let row=e.target.closest(".layer"),name=row?.querySelector(".pick")?.textContent,l=S.layers.find(x=>x.name===name);if(l){if(e.target.checked)S.selected.add(l.id);else S.selected.delete(l.id)}}});
+$("groupBtn").onclick=()=>{
+ if(S.selected.size<2){alert("Tick the first checkbox on at least two layers to group them.");return}
+ checkpoint();let gid="group-"+S.nextId++;
+ let groupName=prompt("Name this group","Group "+(S.nextId-1))||("Group "+(S.nextId-1));
+ S.layers.forEach(l=>{if(S.selected.has(l.id)){l.group=gid;l.groupName=groupName}});
+ drawLayers();autosave();hud.textContent="Grouped "+S.selected.size+" layers as “"+groupName+"”";
+};
+$("ungroupBtn").onclick=()=>{
+ let targets=S.layers.filter(l=>S.selected.has(l.id)&&l.group);
+ if(!targets.length){alert("Select one or more grouped layers using the first checkbox.");return}
+ checkpoint();let groups=new Set(targets.map(l=>l.group));
+ S.layers.forEach(l=>{if(groups.has(l.group)){l.group=null;l.groupName=null}});
+ drawLayers();autosave();hud.textContent="Ungrouped selected layer groups";
+};
+
 for(let id of ["size","opacity","pressure","smooth","intensity","speed","freq","loop","layerOpacity"]){$(id).oninput=()=>{let suffix=id==="opacity"||id==="pressure"||id==="smooth"||id==="layerOpacity"?"%":id==="speed"?"×":"";$((id==="freq"?"freq":id)+"V").textContent=$(id).value+suffix;if(id==="layerOpacity")getLayer().opacity=+$(id).value/100;render()}}
 function setColor(c){$("color").value=c;$("wheel").value=c}
 function rememberColor(c){S.colors=[c,...S.colors.filter(x=>x!==c)].slice(0,30);drawPalette()}
@@ -102,7 +311,7 @@ function download(blob,name){let u=URL.createObjectURL(blob),a=document.createEl
 $("saveBtn").onclick=()=>{autosave();hud.textContent="Autosaved locally"};
 $("projectBtn").onclick=()=>download(new Blob([JSON.stringify(stateProject())],{type:"application/json"}),"wobble-project.json");
 $("pngBtn").onclick=()=>{let out=renderExport(0);out.toBlob(b=>download(b,"wobble-art.png"))};
-function renderExport(t){let out=document.createElement("canvas");out.width=canvas.width;out.height=canvas.height;let c=out.getContext("2d"),scale=out.width/canvas.clientWidth;c.scale(scale,scale);c.fillStyle="#f8f7f2";c.fillRect(0,0,canvas.clientWidth,canvas.clientHeight);let old=ctx;ctx=c;for(let l of S.layers){if(!l.visible)continue;c.save();c.globalAlpha=l.opacity;c.globalCompositeOperation=l.blend||"source-over";for(let st of l.strokes)drawOne(st,t);c.restore()}ctx=old;return out}
+function renderExport(t){let out=document.createElement("canvas");out.width=canvas.width;out.height=canvas.height;let c=out.getContext("2d"),scale=out.width/canvas.clientWidth;c.scale(scale,scale);c.fillStyle="#f8f7f2";c.fillRect(0,0,canvas.clientWidth,canvas.clientHeight);let old=ctx;ctx=c;for(let l of S.layers){if(!l.visible)continue;c.save();c.globalAlpha=l.opacity;c.globalCompositeOperation=l.blend||"source-over";for(let st of l.strokes)drawStrokeSet(st,t);c.restore()}ctx=old;return out}
 async function exportGif(){if(!window.GIF){alert("GIF encoder could not load. Check your internet connection, then reload.");return}let gif=new GIF({workers:2,quality:12,width:canvas.width,height:canvas.height,workerScript:"https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js"});let fps=12,dur=+$("loop").value,frames=Math.ceil(fps*dur);for(let i=0;i<frames;i++)gif.addFrame(renderExport(i/fps),{delay:1000/fps,copy:true});gif.on("finished",blob=>download(blob,"wobble-animation.gif"));gif.render()}
 function exportVideo(mime){let out=renderExport(0),stream=out.captureStream(30);let rec;try{rec=new MediaRecorder(stream,{mimeType:mime})}catch(e){alert("This browser does not support MP4 recording. Try Safari on a recent iPad or export WebM on a compatible browser.");return}let chunks=[];rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};rec.onstop=()=>{let type=rec.mimeType||mime;download(new Blob(chunks,{type}),type.includes("mp4")?"wobble-animation.mp4":"wobble-animation.webm")};rec.start();let start=performance.now(),duration=+$("loop").value;function tick(){let t=(performance.now()-start)/1000,frame=renderExport(t),c=out.getContext("2d");c.clearRect(0,0,out.width,out.height);c.drawImage(frame,0,0);if(t<duration)requestAnimationFrame(tick);else rec.stop()}tick()}
 $("gifBtn").onclick=exportGif;$("mp4Btn").onclick=()=>{let m=["video/mp4;codecs=h264","video/mp4","video/webm;codecs=vp9","video/webm"].find(x=>MediaRecorder.isTypeSupported(x));if(!m){alert("No supported video recording format found in this browser.");return}exportVideo(m)};
@@ -111,6 +320,15 @@ $("fitBtn").onclick=()=>{S.viewScale=1;S.viewX=S.viewY=0;render()};
 canvas.addEventListener("click",e=>{if(S.tool==="picker"){let p=pos(e),c=sampleColor(p.x,p.y);if(c){setColor(c);rememberColor(c)}}});
 window.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"){e.preventDefault();undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="y"){e.preventDefault();redo()}});
 try{let saved=localStorage.getItem("wobbleStudioAuto");if(saved){let d=JSON.parse(saved);S.layers=d.layers||S.layers;S.active=d.active||1;S.nextId=d.nextId||2}}catch(e){}
+$("hideOptionsBtn").onclick=()=>{document.body.classList.add("options-hidden");hud.textContent="Options hidden · tap Show options to return"};
+$("showOptions").onclick=()=>{document.body.classList.remove("options-hidden");resize()};
+$("fullscreenBtn").onclick=async()=>{
+ try{
+  if(!document.fullscreenElement){await document.documentElement.requestFullscreen();$("fullscreenBtn").textContent="Exit fullscreen"}
+  else{await document.exitFullscreen();$("fullscreenBtn").textContent="Fullscreen"}
+ }catch(_){hud.textContent="Fullscreen isn't available in this browser; use Hide options instead"}
+};
+document.addEventListener("fullscreenchange",()=>{resize();$("fullscreenBtn").textContent=document.fullscreenElement?"Exit fullscreen":"Fullscreen"});
 drawLayers();resize();render();
 })();
 </script>
